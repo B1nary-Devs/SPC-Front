@@ -1,5 +1,5 @@
 
-import Menu from '../../components/menu';
+import Menu from '../../components/menu/inde';
 import './index.css'
 
 

@@ -32,42 +32,39 @@ export default function Menu(){
 
     return(
         <div className={menuCss}>
-
             <div className='iconGrid'>
-                <div className='iconLogo'>
+                <div>
                     <img src="/icon_menu.svg" alt="Icon_menu" onClick={()=>modal() } ></img>
                 </div>
-                
             </div>
             
             <div className='iconGrid'>
-                <div>
+                <a href='/usuario'>
                     <img src='/usuario.svg' alt="foto Usuario"></img>
-                </div>
+                </a>
                 <h3>{usuarioNome}</h3>
             </div>
 
             <div className='iconGrid'>
-                <div>
+                <a href='/home'>
                     <img src='/home.svg' alt="home"></img>
-                </div>
+                </a>
                 <h3>{homeNome}</h3>
             </div>
 
             <div className='iconGrid'>
-                <div>
+                <a href='/dashboard'>
                     <img src='/dashboard.svg' alt="Dashboard"></img>
-                </div>
+                </a>
                 <h3>{dasboardName}</h3>
             </div>
 
             <div className='iconGrid'>
-                <div>
+                <a href='/cadastro'>
                     <img src='/cadastro.svg' alt="Cadastro"></img>
-                </div>
+                </a>
                 <h3>{cadastroNome}</h3>
             </div>
-
         </div>
     )
 }
