@@ -1,0 +1,43 @@
+.menu{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1%;
+    gap: 10%;
+    background-color: rgb(12, 78, 201);
+}
+
+.menu img{
+    cursor: pointer;
+}
+
+.menuOpen{
+    width: 15%;
+}
+
+.iconGrid{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    white-space: nowrap;
+    padding: 5%;
+    width: 100%;
+}
+
+.logoGrid{
+    display: flex;
+    justify-content: end;
+    width: 100%;
+    padding: 5%;
+}
+
+
+.iconGrid h3{
+    margin: 0 10%;
+    color: white;
+}
+.iconClose{
+    display: none;
+}
