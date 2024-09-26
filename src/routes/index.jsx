@@ -1,11 +1,11 @@
 import { Routes, Route } from 'react-router-dom'
 
-import Teste from '../pages/Teste/teste'
+import CadastroLogin from '../pages/Cadastro_login'
 
 function RoutesApp(){
     return(
         <Routes>
-            <Route path='/teste' element={<Teste/>}/>
+            <Route path='/cadastroLogin' element={<CadastroLogin/>}/>
         </Routes>
     )
 }
