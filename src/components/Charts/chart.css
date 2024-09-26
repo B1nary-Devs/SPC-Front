@@ -1,0 +1,9 @@
+.container-chart{
+    width: 100%;
+    min-height: 300px;
+    max-height: 320px;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}

@@ -1,0 +1,79 @@
+.container {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); /* 6 colunas de largura igual */
+  grid-template-rows: repeat(6, 1fr);    /* 6 linhas de altura ajustada */
+  gap: 20px; 
+  height: 100vh;
+  width: 100%;
+  padding: 20px; 
+  box-sizing: border-box; /* Garante que padding e border não aumentem a largura total */
+  
+}
+
+.servicesEstado, .kindEstado, 
+.mais-TransacoesServicesGoods, 
+.EstadoCampeaoServices, .EstadoCampeaoGoods {
+  background-color: #fff;
+  border: 1px solid #ddd; 
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+
+.cardTotal {
+  grid-column: 1 / 3; /* Ocupa as colunas 1 e 2 */
+  grid-row: 1;        /* Primeira linha */
+}
+
+.cardSucces {
+  grid-column: 3 / 5; /* Ocupa as colunas 3 e 4 */
+  grid-row: 1;        /* Primeira linha */
+}
+
+.cardFail {
+  grid-column: 5 / 7; /* Ocupa as colunas 5 a 7 */
+  grid-row: 1;        /* Primeira linha */
+}
+
+.servicesEstado {
+  grid-column: 1 / 4; /* Ocupa as colunas 1 a 3 */
+  grid-row: 2;        /* Segunda linha */
+}
+
+.kindEstado {
+  grid-column: 4 / 7; /* Ocupa as colunas 4 a 6 */
+  grid-row: 2;        /* Segunda linha */
+}
+
+.mais-TransacoesServicesGoods {
+  grid-column: 1 / 7; /* Ocupa todas as colunas */
+  grid-row: 3;        /* Terceira linha */
+}
+
+.EstadoCampeaoServices {
+  grid-column: 1 / 4; /* Ocupa as colunas 1 a 3 */
+  grid-row: 4;        /* Quarta linha */
+}
+
+.EstadoCampeaoGoods {
+  grid-column: 4 / 7; /* Ocupa as colunas 4 a 6 */
+  grid-row: 4;        /* Quarta linha */
+}
+
+/* Estilos responsivos apenas para mobile */
+@media (max-width: 768px) {
+  .container {
+    grid-template-columns: 1fr; /* 1 coluna para mobile */
+    grid-template-rows: auto; /* Linhas com altura automática */
+    gap: 15px; /* Ajusta o espaçamento */
+    height: auto; /* Altura ajusta de acordo com o conteúdo */
+    padding: 10px; /* Reduz padding para telas pequenas */
+  }
+
+  .cardTotal, .cardSucces, .cardFail, 
+  .servicesEstado, .kindEstado, 
+  .mais-TransacoesServicesGoods, 
+  .EstadoCampeaoServices, .EstadoCampeaoGoods {
+    grid-column: 1 / -1; /* Cada card ocupa toda a largura da tela */
+    grid-row: auto; /* Organiza os cards um abaixo do outro */
+  }
+}
