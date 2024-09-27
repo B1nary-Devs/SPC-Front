@@ -1,9 +1,111 @@
-import React from "react";
-import { Modal, Box, Typography, Button } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Modal} from "@mui/material";
 import './index.css'
+import baseURL from "../../utils";
 
 
-export default function ModalTermo({ open, onClose }){
+export default function ModalTermo({ open, onClose, dataForm }){
+    const [dataTermo, setDataTermo] = useState([]);
+    const [day, setDay] = useState('');
+    const [checkObrigatorio, setCheckObrigatorio] = useState(false);
+    const [checkOpcional, setcheckOpcional] = useState(false);
+    const [listTermos, setListTermos] = useState([]);
+
+    useEffect(()=>{
+        termo();
+
+        const data = new Date();
+        const dataFormatada = data.toLocaleDateString('pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+        });
+
+        setDay(dataFormatada);
+    }, [])
+
+    useEffect(() => {
+        if ((listTermos.length > 0) && checkObrigatorio) {
+            cadastroUsuario();
+        }
+    }, [listTermos]);
+
+
+    async function termo(){
+        try {
+            const response = await fetch(`${baseURL}terms/latestTerm`, {
+                method: "GET",
+              });
+    
+            const data = await response.json();
+            
+            return setDataTermo(data)
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const addTermos = () => {
+        let termos = []
+        if(checkObrigatorio){
+            const termosObrigatorios = dataTermo.filter((x)=>x.prioridade == 1).map((y)=>({
+                nome_termo: y.nome_termo,
+                prioridade: 1,
+                descricao: y.descricao,
+                aceite: true,
+                versao: y.versao
+            }))
+            
+            termos = [...termos, ...termosObrigatorios]
+        }
+
+        if(checkOpcional){
+            const termosOpcionais = dataTermo.filter((x)=>x.prioridade == 2).map((y)=>({
+                nome_termo: y.nome_termo,
+                prioridade: 2,
+                descricao: y.descricao,
+                aceite: true,
+                versao: y.versao
+            }))
+
+            termos = [...termos, ...termosOpcionais]
+        }
+
+        setListTermos(termos);
+    }
+
+    async function cadastroUsuario(){
+        try {
+            const dado = {
+                nome: dataForm.nome,
+                email: dataForm.email,
+                cpf_cnpj: dataForm.cpf_cnpj,
+                telefone: dataForm.tel_cel,
+                celular: dataForm.tel_cel,
+                cep: dataForm.cep,
+                endereco: dataForm.endereco,
+                senha: dataForm.senha,
+                termos: listTermos
+            }
+            console.log(dado)
+
+            const response = await fetch(`${baseURL}users/createUser`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(dado),
+            });
+
+            const result = await response.json();
+            console.log('Usuário criado com sucesso:', result);
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return(
         <div>
             
@@ -15,34 +117,58 @@ export default function ModalTermo({ open, onClose }){
             >
                 <div className="modal">
                     <div className="header">
-                        <button className="btnClose">X</button>
+                        <button className="btnClose" onClick={onClose}>X</button>
                     </div>
-                    <div>
-                        <h3>TERMO DE USO E CONDIÇÕES - 15/09/2024</h3>
-                    </div>
-                    <div className="boxTermo">
-                        <p>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently.
-                            crambled it to make .
-                        </p>
-                        <p>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently.
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make .
-                        </p>
-                        <p>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently.
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make .
-                        </p>
-                    </div>
-                    <hr/>
-                    <div>
-                        <input type="checkbox" id="termosOpcionais" name="termosOpcionais" />
-                        <label for="termosOpcionais">Aceita receber nossa newsletter com novidades e ofertas exclusivas.</label>
+                    <div className="secondBox">
+                        <div>
+                            <h3>TERMO DE USO E CONDIÇÕES - {day}</h3>
+                        </div>
+                        <div className="boxTermo">
+                            <p>Termos Obrigatorios: </p>
+                            {
+                                dataTermo.filter((x)=>x.prioridade == 1).map((x)=>{
+                                    return(
+                                        <p>{x.descricao}</p>
+                                    )
+                                })
+                            }
+                            <p>Termos Opcionais: </p>
+                            {
+                                dataTermo.filter((x)=>x.prioridade == 2).map((x)=>{
+                                    return(
+                                        <p>{x.descricao}</p>
+                                    )
+                                })
+                            }
+                        </div>
 
-                        <input type="checkbox" id="termosObrigatorio" name="termosObrigatorio" />
-                        <label for="termosObrigatorio">Li e concordo com os termos</label>
+                        <hr/>
+
+                        <div className="checkBox">
+                            <div className="check">
+                                <input 
+                                    type="checkbox" 
+                                    id="termosOpcionais" 
+                                    name="termosOpcionais" 
+                                    checked={checkOpcional}
+                                    onChange={()=> setcheckOpcional(true)} 
+                                />
+                                <label for="termosOpcionais">Aceita receber nossa newsletter com novidades e ofertas exclusivas.</label>
+                            </div>
+                            <div className="check">
+                                <input 
+                                    type="checkbox" 
+                                    id="termosObrigatorio" 
+                                    name="termosObrigatorio" 
+                                    checked={checkObrigatorio} 
+                                    onChange={()=> setCheckObrigatorio(true)} 
+                                    />
+                                <label for="termosObrigatorio">Li e concordo com os termos</label>
+                            </div>
+                        </div>
+                        <button className="btnEnviar" onClick={addTermos}>Avançar</button>
                     </div>
-                    <Button>Cadastrar</Button>
+                    
                 </div>
             </Modal>
 

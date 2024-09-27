@@ -6,6 +6,8 @@ import './index.css'
 
 export default function CadastroLogin(){
     const [openModal, setModalOpen] = useState(false);
+    const [dataForm, setDataForm] = useState([]);
+
     
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -19,7 +21,8 @@ export default function CadastroLogin(){
             email: formData.get('email'),
             senha: formData.get('senha'),
         };
-        console.log(data);
+        
+        setDataForm(data)
 
         event.target.reset();
 
@@ -49,7 +52,7 @@ export default function CadastroLogin(){
                 </div>
                 {
                     openModal && (
-                        <ModalTermo open={openModal} onClose={handleCloseModal} />
+                        <ModalTermo open={openModal} onClose={handleCloseModal} dataForm={dataForm} />
                     )
                 }
             </div>

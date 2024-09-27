@@ -51,10 +51,11 @@
 .cadastro{
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
     width: 70%;
     margin-left: 30%;
+    gap: 5%;
 
     padding: 20px 40px;
 }
