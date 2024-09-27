@@ -1,9 +1,35 @@
+import CadastroForm from '../../components/formCadastro'
+import ModalTermo from '../../components/modalTermo';
+import { useState } from 'react';
 import './index.css'
-import TextField from '@mui/material/TextField';
-import InputAdornment from '@mui/material/InputAdornment';
+
 
 export default function CadastroLogin(){
+    const [openModal, setModalOpen] = useState(false);
     
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const data = {
+            nome: formData.get('nome'),
+            cpf_cnpj: formData.get('cpf_cnpj'),
+            tel_cel: formData.get('tel_cel'),
+            cep: formData.get('cep'),
+            endereco: formData.get('endereco'),
+            email: formData.get('email'),
+            senha: formData.get('senha'),
+        };
+        console.log(data);
+
+        event.target.reset();
+
+        setModalOpen(true);
+    };
+    
+    const handleCloseModal = (()=>{
+        setModalOpen(false)
+    })
+
     return(
         <div className='container_menu'>
             <div className='entrar'>
@@ -19,123 +45,13 @@ export default function CadastroLogin(){
                     <p>Registre-se e tenha acesso a insights valiosos.</p>
                 </div>
                 <div className='gridInput'>
-                    <TextField
-                        id="input-with-icon-textfield"
-                        label="Nome"
-                        sx={{ m: 1, width: '100%'}}
-                        size="small"
-                        slotProps={{
-                        input: {
-                            startAdornment: (
-                            <InputAdornment position="start">
-                                <img src='/user-alt-1-svgrepo-com.svg'/>
-                            </InputAdornment>
-                            ),
-                        },
-                        }}
-                    />
-                    <TextField
-                        id="cpf_cnpj"
-                        label="CPF/CNPJ"
-                        type='number'
-                        size="small"
-                        sx={{ m: 1, width: '100%' }}
-                        slotProps={{
-                        input: {
-                            startAdornment: (
-                            <InputAdornment position="start">
-                                <img src='/id-card-svgrepo-com.svg'/>
-                            </InputAdornment>
-                            ),
-                        },
-                        }}
-                    />
-                    <TextField
-                        id="tel_cel"
-                        label="Telefone/Celular"
-                        sx={{ m: 1, width: '100%' }}
-                        type='number'
-                        size="small"
-                        slotProps={{
-                        input: {
-                            startAdornment: (
-                            <InputAdornment position="start">
-                                <img src='/telephone-signal-svgrepo-com.svg'/>
-                            </InputAdornment>
-                            ),
-                        },
-                        }}
-                    />
-                    <TextField
-                        id="cep"
-                        label="CEP"
-                        sx={{ m: 1, width: '100%' }}
-                        type='number'
-                        size="small"
-                        slotProps={{
-                        input: {
-                            startAdornment: (
-                            <InputAdornment position="start">
-                                <img src='/place-marker-svgrepo-com.svg'/>
-                            </InputAdornment>
-                            ),
-                        },
-                        }}
-                    />
-                    <TextField
-                        id="endereco"
-                        label="Endereço"
-                        sx={{ m: 1, width: '100%' }}
-                        type='text'
-                        size="small"
-                        slotProps={{
-                        input: {
-                            startAdornment: (
-                            <InputAdornment position="start">
-                                <img src='/house-user-svgrepo-com.svg'/>
-                            </InputAdornment>
-                            ),
-                        },
-                        }}
-                    />
-                    <TextField
-                        id="email"
-                        label="E-mail"
-                        sx={{ m: 1, width: '100%' }}
-                        type='email'
-                        size="small"
-                        slotProps={{
-                        input: {
-                            startAdornment: (
-                            <InputAdornment position="start">
-                                <img src='/email-1573-svgrepo-com.svg'/>
-                            </InputAdornment>
-                            ),
-                        },
-                        }}
-                    />
-                    <TextField
-                        id="senha"
-                        label="Senha"
-                        sx={{ m: 1, width: '100%' }}
-                        type='password'
-                        size="small"
-                        slotProps={{
-                        input: {
-                            startAdornment: (
-                            <InputAdornment position="start">
-                                <img src='/password-svgrepo-com.svg'/>
-                            </InputAdornment>
-                            ),
-                        },
-                        }}
-                    />
-                    <button className='btnCad'>Cadastrar</button>
+                    <CadastroForm onSubmit={handleSubmit}/>
                 </div>
-                
-                
-                
-            
+                {
+                    openModal && (
+                        <ModalTermo open={openModal} onClose={handleCloseModal} />
+                    )
+                }
             </div>
         </div>
     )

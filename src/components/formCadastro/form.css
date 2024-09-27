@@ -1,0 +1,25 @@
+.form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%
+}
+
+.btnForm{
+    color: #ffff;
+    background-color: #0C4EC9;
+    padding: 15px 50px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+
+    border: 2px solid #ffff;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+   width: 40%;
+   text-align: center;
+}

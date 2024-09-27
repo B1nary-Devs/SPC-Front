@@ -56,17 +56,15 @@
     width: 70%;
     margin-left: 30%;
 
-    padding: 40px;
+    padding: 20px 40px;
 }
 
 .gridText{
     display: flex;
     flex-direction: column;
-    gap: 20px;
     text-align: center;
+    gap: 10px;
     color: #0A0453;
-
-    
 }
 
 .gridInput{
@@ -83,20 +81,3 @@
     width: 30px;
 }
 
-.btnCad{
-    color: #ffff;
-    background-color: #0C4EC9;
-    padding: 15px 50px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-
-    border: 2px solid #ffff;
-
-    border-radius: 10px;
-
-    cursor: pointer;
-
-   
-}
