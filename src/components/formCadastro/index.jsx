@@ -1,5 +1,6 @@
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
+import PropTypes from 'prop-types';
 import './form.css'
 
 
@@ -10,8 +11,7 @@ const CadastroForm = ({ onSubmit }) => {
                 id='input-with-icon-textfield'
                 label='Nome'
                 name='nome'
-                sx={{ m: 1, width: '100%'}}
-                size='small'
+                
                 required
                 slotProps={{
                 input: {
@@ -27,10 +27,8 @@ const CadastroForm = ({ onSubmit }) => {
                 id='cpf_cnpj'
                 label='CPF/CNPJ'
                 type='number'
-                size='small'
                 name='cpf_cnpj'
                 required
-                sx={{ m: 1, width: '100%' }}
                 slotProps={{
                 input: {
                     startAdornment: (
@@ -44,10 +42,8 @@ const CadastroForm = ({ onSubmit }) => {
             <TextField
                 id='tel_cel'
                 label='Telefone/Celular'
-                sx={{ m: 1, width: '100%' }}
                 type='number'
                 name='tel_cel'
-                size='small'
                 slotProps={{
                 input: {
                     startAdornment: (
@@ -61,10 +57,8 @@ const CadastroForm = ({ onSubmit }) => {
             <TextField
                 id='cep'
                 label='CEP'
-                sx={{ m: 1, width: '100%' }}
                 type='number'
                 name='cep'
-                size='small'
                 required
                 slotProps={{
                 input: {
@@ -79,10 +73,8 @@ const CadastroForm = ({ onSubmit }) => {
             <TextField
                 id='endereco'
                 label='Endereço'
-                sx={{ m: 1, width: '100%' }}
                 type='text'
                 name='endereco'
-                size='small'
                 required
                 slotProps={{
                 input: {
@@ -97,10 +89,8 @@ const CadastroForm = ({ onSubmit }) => {
             <TextField
                 id='email'
                 label='E-mail'
-                sx={{ m: 1, width: '100%' }}
                 type='email'
                 name='email'
-                size='small'
                 required
                 slotProps={{
                 input: {
@@ -115,10 +105,8 @@ const CadastroForm = ({ onSubmit }) => {
             <TextField
                 id='senha'
                 label='Senha'
-                sx={{ m: 1, width: '100%' }}
                 type='password'
                 name='senha'
-                size='small'
                 required
                 slotProps={{
                 input: {
@@ -130,9 +118,16 @@ const CadastroForm = ({ onSubmit }) => {
                 },
                 }}
             />
-            <button type='submit' className='btnForm'>Cadastrar</button>
+            <div className='btnDiv'>
+                <button type='submit' className='btnForm'>Cadastrar</button>
+            </div>
+            
         </form>
     )
 }
+
+CadastroForm.propTypes = {
+    onSubmit: PropTypes.func.isRequired, // Valida que onSubmit é obrigatório e deve ser uma função
+};
 
 export default CadastroForm
