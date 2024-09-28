@@ -10,6 +10,8 @@
     min-height: 100vh;
 }
 
+/* --lado esquerdo  */
+
 .entrar{
     display: flex;
     flex-direction: column;
@@ -19,7 +21,7 @@
     background-color: #0C4EC9;
     
     color: white;
-
+    padding: 2%;
     width: 30%;
 
     position: fixed;
@@ -47,16 +49,15 @@
     cursor: pointer;
 }
 
+/* --lado direito  */
 
 .cadastro{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 70%;
+    width: 100%;
     margin-left: 30%;
-    gap: 5%;
-
     padding: 20px 40px;
 }
 
@@ -71,14 +72,6 @@
 .gridInput{
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
-    gap: 10px;
-
-    width: 80%;
+    width: 100%;
 }
-
-.gridInput img{
-    width: 30px;
-}
-
