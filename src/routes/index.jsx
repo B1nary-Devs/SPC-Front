@@ -6,9 +6,10 @@ import Home from '../pages/Home'
 function RoutesApp(){
     return(
         <Routes>
-            <Route path='/cadastroLogin' element={<CadastroLogin/>}/>
+            {/* <Route path='/cadastroLogin' element={<CadastroLogin/>}/> */}
             <Route path='/dashboard' element={<Dashboard/>}/>
-            <Route path='/' element={<Home/>}/>
+            <Route path='/home' element={<Home/>}/>
+            <Route path='/' element={<CadastroLogin/>}/>
         </Routes>
     )
 }

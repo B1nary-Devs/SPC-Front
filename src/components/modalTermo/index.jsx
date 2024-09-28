@@ -123,7 +123,7 @@ export default function ModalTermo({ open, onClose, dataForm }){
                 setStatusAlert('success');
                 setMensageAlert('Usuário criado com sucesso!');
                 setTimeout(() => {
-                    window.location.href = "/";
+                    window.location.href = "/dashboard";
                 }, 2000);
             }else{
                 setOpenSnackbar(true);
