@@ -11,7 +11,7 @@ COPY . .
 RUN npm install
 
 # Exponha a porta em que o React estará ouvindo
-EXPOSE 3000
+EXPOSE 5173
 
 # Comando para iniciar o React
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev"]
