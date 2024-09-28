@@ -15,4 +15,4 @@ Inicio da aplicação Docker:
     docker-compose up --build
     (App docker tem que estar rodando)
 
-- Rota: http://localhost:3000  
+- Rota: http://localhost:5173/ 
