@@ -14,7 +14,7 @@ Chart.defaults.color = '#FFFFFF'; // Cor da fonte branca
 export const data = {
 
   kinds_counts_Sum: {
-    titulo: 'Total de Transações',
+    titulo: 'Total de Duplicatas',
     valor: 181.239,
     color: '#0C4EC9',
     total: '20.000',
@@ -44,7 +44,7 @@ export const data = {
     labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
     datasets: [
       {
-        label: 'Service Counts',
+        label: 'Serviço',
         data: [22, 33, 62, 54, 54, 55, 70, 237, 72, 112, 48, 62], // Dados ordenados de acordo com os meses
         borderColor: 'rgb(208, 191, 240)',
         backgroundColor: 'rgb(208, 191, 240)',
@@ -53,7 +53,7 @@ export const data = {
         fill: true,
       },
       {
-        label: 'Goods Counts',
+        label: 'Produto',
         data: [1357, 1294, 1176, 2993, 7752, 5219, 3074, 154118, 1811, 1005, 369, 190], // Dados ordenados de acordo com os meses
         borderColor: '#36A2EB',
         backgroundColor: 'rgba(54, 162, 235, 0.2)',
@@ -85,7 +85,7 @@ export const data = {
   },
 
   cancelados_counts_sum: {
-    titulo: 'Transações Canceladas',
+    titulo: 'Duplicatas Canceladas',
     valor: 43.488,
     color: '#ef3333e8',
   },
@@ -94,7 +94,7 @@ export const data = {
     labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
     datasets: [
       {
-        label: 'Transações Canceladas',
+        label: 'Duplicatas Canceladas',
         data: [16, 41, 117, 42, 30, 20, 89, 42627, 278, 138, 63, 27], // Dados ordenados de acordo com os meses
         borderColor: '#FF6384',
         backgroundColor: 'rgba(255, 99, 132, 0.2)',
@@ -106,7 +106,7 @@ export const data = {
   },
 
   active_counts_sum: {
-    titulo: 'Transações Finalizadas',
+    titulo: 'Duplicatas Finalizadas',
     valor: 137.281,
     color: 'rgba(49, 131, 131, 0.589)',
   },
@@ -114,7 +114,7 @@ export const data = {
     labels: ['Agosto', 'Maio', 'Junho', 'Julho', 'Abril', 'Setembro', 'Janeiro', 'Fevereiro', 'Marco', 'Outubro', 'Novembro', 'Dezembro'],
     datasets: [
       {
-        label: 'Transações Finalizadas',
+        label: 'Duplicatas Finalizadas',
         data: [111705, 7671, 5213, 3027, 2797, 1595, 1351, 1277, 1104, 971, 350, 220],
         backgroundColor: 'rgba(49, 131, 131, 0.589)',
         borderWidth: 2,
@@ -130,7 +130,7 @@ export const data = {
     labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
     datasets: [
       {
-        label: 'Finished Counts',
+        label: 'Duplicatas Finalizadas',
         data: [12, 9, 17, 208, 105, 41, 28, 23, 10, 8, 4, 5],
         backgroundColor: 'rgba(49, 131, 131, 0.589)',
         borderWidth: 2,
@@ -147,7 +147,7 @@ export const data = {
     labels: ['SP', 'CE', 'MG', 'NA', 'PE'],
     datasets: [
       {
-        label: 'Transações de Produtos por Estado',
+        label: 'Duplicatas de Produtos por Estado',
         data: [157111, 5602, 4000, 3881, 2817],
         backgroundColor: '#1168ab',
       }
@@ -159,7 +159,7 @@ export const data = {
     labels: ['SP', 'NA', 'BA', 'SC', 'PA'],
     datasets: [
       {
-        label: 'Transações de Produtos por Estado Canceladas',
+        label: 'Duplicatas de Produtos por Estado Canceladas',
         data: [42571, 662, 101, 14, 5],
         backgroundColor: '#ef3333e8',
       }
@@ -171,7 +171,7 @@ export const data = {
     labels: ['SP', 'MG', 'RS', 'SC', 'RJ'],
     datasets: [
       {
-        label: 'Transações de Produtos por Estado Finalizadas',
+        label: 'Duplicatas de Produtos por Estado Finalizadas',
         data: [230, 59, 57, 26, 16],
         backgroundColor: 'rgba(49, 131, 131, 0.589)',
         fill: true
@@ -195,7 +195,7 @@ export const data = {
     labels: ['SP', 'NA', 'RJ', 'PA', 'SC'],
     datasets: [
       {
-        label: 'Transações de Serviço por Estado',
+        label: 'Duplicatas de Serviço por Estado',
         data: [510, 233, 84, 20, 16],
         backgroundColor: '#1168ab',
         tension: 0.4,
@@ -208,7 +208,7 @@ export const data = {
     labels: ['NA', 'SP'],
     datasets: [
       {
-        label: 'Transações de Serviço por Estado Canceladas',
+        label: 'Duplicatas de Serviço por Estado Canceladas',
         data: [111, 17],
         backgroundColor: '#ef3333e8',
       }
@@ -220,7 +220,7 @@ export const data = {
     labels: ['SP', 'SC', 'NA', 'RJ', 'MG'],
     datasets: [
       {
-        label: 'Transações de Serviço por Estado Finalizadas',
+        label: 'Duplicatas de Serviço por Estado Finalizadas',
         data: [16, 15, 8, 2, 1],
         backgroundColor: 'rgba(49, 131, 131, 0.589)',
       }

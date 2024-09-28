@@ -8,8 +8,10 @@ export default function CardDashboardSample({children, dataCard}){
     return(
         <div className="cardSample" style={{ background: dataCard.color}}>
             <h4 className='title-sample-card'>{dataCard.titulo}</h4>
-            <div className='values-card-sample' style={{ color: dataCard.color }}>
+            <div className='values-card-sample'>
+                <div style={{ color: dataCard.color }}>
                 {children}
+                </div>
                 <span className='values-card-sample'>{dataCard.valor}</span>
             </div>
         </div>
