@@ -1,190 +1,241 @@
 // data.js
 
+import { color } from "chart.js/helpers";
+
+import { Chart, registerables } from 'chart.js';
+Chart.register(...registerables);
+
+// Definindo configurações globais para fontes
+Chart.defaults.font.family = 'Roboto, sans-serif'; // Se você quiser usar a fonte Roboto como no resto do projeto
+Chart.defaults.font.size = 14; // Tamanho da fonte
+Chart.defaults.color = '#FFFFFF'; // Cor da fonte branca
+
+
 export const data = {
 
-    kinds_counts_Sum: {
-      titulo: 'Total de Transações',
-      valor: 181.239,
-      color: '#0C4EC9',
-      total: '20.000',
-    },
+  kinds_counts_Sum: {
+    titulo: 'Total de Transações',
+    valor: 181.239,
+    color: '#0C4EC9',
+    total: '20.000',
+  },
 
-    kinds_counts: {
-      labels: ['Agosto', 'Maio', 'Junho', 'Julho', 'Abril', 'Setembro', 'Janeiro', 'Fevereiro', 'Marco', 'Outubro', 'Novembro', 'Dezembro'],
-      datasets: [
-        {
-          label: 'Kinds Counts',
-          data: [154355, 7806, 5274, 3144, 3047, 1883, 1379, 1327, 1238, 1117, 417, 252],
-        }
-      ]
-    },
+  kinds_counts: {
+    labels: ['Agosto', 'Maio', 'Junho', 'Julho', 'Abril', 'Setembro', 'Janeiro', 'Fevereiro', 'Marco', 'Outubro', 'Novembro', 'Dezembro'],
+    datasets: [
+      {
+        label: 'Kinds Counts',
+        data: [154355, 7806, 5274, 3144, 3047, 1883, 1379, 1327, 1238, 1117, 417, 252],
+        borderWidth: 2,
+        //borderColor: '#1168ab', 
+        //backgroundColor: '#1168ab', 
+        borderColor: '#FF6384',
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderWidth: 2,
+        tension: 0.4,
+        fill: true,
+      }
+    ]
+  },
 
-    service_counts_Sum: 881,
-    service_counts: {
-      labels: ['Agosto', 'Outubro', 'Setembro', 'Julho', 'Dezembro', 'Marco', 'Junho', 'Abril', 'Maio', 'Novembro', 'Fevereiro', 'Janeiro'],
-      datasets: [
-        {
-          label: 'Service Counts',
-          data: [237, 112, 72, 70, 62, 62, 55, 54, 54, 48, 33, 22],
-        }
-      ]
-    },
+  service_counts_Sum: 881,
 
-    goods_counts: {
-      labels: ['Agosto', 'Maio', 'Junho', 'Julho', 'Abril', 'Setembro', 'Janeiro', 'Fevereiro', 'Marco', 'Outubro', 'Novembro', 'Dezembro'],
-      datasets: [
-        {
-          label: 'Goods Counts',
-          data: [154118, 7752, 5219, 3074, 2993, 1811, 1357, 1294, 1176, 1005, 369, 190],
-        }
-      ]
-    },
+  serviceAndgood: {
+    labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+    datasets: [
+      {
+        label: 'Service Counts',
+        data: [22, 33, 62, 54, 54, 55, 70, 237, 72, 112, 48, 62], // Dados ordenados de acordo com os meses
+        borderColor: 'rgb(208, 191, 240)',
+        backgroundColor: 'rgb(208, 191, 240)',
+        borderWidth: 2,
+        tension: 0.4,
+        fill: true,
+      },
+      {
+        label: 'Goods Counts',
+        data: [1357, 1294, 1176, 2993, 7752, 5219, 3074, 154118, 1811, 1005, 369, 190], // Dados ordenados de acordo com os meses
+        borderColor: '#36A2EB',
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderWidth: 2,
+        tension: 0.4,
+        fill: true,
+      },
+    ]
+  },
 
-    cancelados_counts_sum: {
-      titulo: 'Transações Canceladas',
-      valor: 43.488,
-      color: '#ef3333e8',
-    },
-    cancelados_counts: {
-      labels: ['Agosto', 'Setembro', 'Outubro', 'Marco', 'Julho', 'Novembro', 'Abril', 'Fevereiro', 'Maio', 'Dezembro', 'Junho', 'Janeiro'],
-      datasets: [
-        {
-          label: 'Transações Canceladas',
-          data: [42627, 278, 138, 117, 89, 63, 42, 41, 30, 27, 20, 16],
-          backgroundColor: '#ef3333e8',
-          borderWidth: 2,
-          borderColor: '#ef3333e8', // Cor da linha
-          tension: 0.4, // Curvatura da linha
-          fill: true, // Preencher a área abaixo da linha
-          pointBackgroundColor: '#ef3333e8', // Cor de fundo dos pontos
-          pointBorderWidth: 3, // Largura da borda dos pontos
-          pointRadius: 5, // Tamanho dos pontos
-          pointHoverRadius: 7,
-        }
-      ]
-    },
+  service_counts: {
+    labels: ['Agosto', 'Outubro', 'Setembro', 'Julho', 'Dezembro', 'Marco', 'Junho', 'Abril', 'Maio', 'Novembro', 'Fevereiro', 'Janeiro'],
+    datasets: [
+      {
+        label: 'Service Counts',
+        data: [237, 112, 72, 70, 62, 62, 55, 54, 54, 48, 33, 22],
+      }
+    ]
+  },
 
-      active_counts_sum: {
-      titulo: 'Transações Concluídas',
-      valor: 137.281,
-      color: '#2dba26e8',
-    },
-    active_counts: {
-      labels: ['Agosto', 'Maio', 'Junho', 'Julho', 'Abril', 'Setembro', 'Janeiro', 'Fevereiro', 'Marco', 'Outubro', 'Novembro', 'Dezembro'],
-      datasets: [
-        {
-          label: 'Transações Concluídas',
-          data: [111705, 7671, 5213, 3027, 2797, 1595, 1351, 1277, 1104, 971, 350, 220],
-          backgroundColor: '#2dba26e8',
-          borderWidth: 2,
-          borderColor: '#2dba26e8', // Cor da linha
-          tension: 0.4, // Curvatura da linha
-          fill: true, // Preencher a área abaixo da linha
-          pointBackgroundColor: '#2dba26e8', // Cor de fundo dos pontos
-          pointBorderWidth: 3, // Largura da borda dos pontos
-          pointRadius: 5, // Tamanho dos pontos
-          pointHoverRadius: 7,
-        }
-      ]
-    },
+  goods_counts: {
+    labels: ['Agosto', 'Maio', 'Junho', 'Julho', 'Abril', 'Setembro', 'Janeiro', 'Fevereiro', 'Marco', 'Outubro', 'Novembro', 'Dezembro'],
+    datasets: [
+      {
+        label: 'Goods Counts',
+        data: [154118, 7752, 5219, 3074, 2993, 1811, 1357, 1294, 1176, 1005, 369, 190],
+      }
+    ]
+  },
 
+  cancelados_counts_sum: {
+    titulo: 'Transações Canceladas',
+    valor: 43.488,
+    color: '#ef3333e8',
+  },
 
-    finished_counts: {
-      labels: ['Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Marco', 'Janeiro', 'Setembro', 'Fevereiro', 'Outubro', 'Dezembro', 'Novembro'],
-      datasets: [
-        {
-          label: 'Finished Counts',
-          data: [208, 105, 41, 28, 23, 17, 12, 10, 9, 8, 5, 4],
-        }
-      ]
-    },
+  cancelados_counts: {
+    labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+    datasets: [
+      {
+        label: 'Transações Canceladas',
+        data: [16, 41, 117, 42, 30, 20, 89, 42627, 278, 138, 63, 27], // Dados ordenados de acordo com os meses
+        borderColor: '#FF6384',
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderWidth: 2,
+        tension: 0.4,
+        fill: true,
+      }
+    ]
+  },
 
-
-    qtd_estado_goods: {
-      labels: ['SP', 'CE', 'MG', 'NA', 'PE'],
-      datasets: [
-        {
-          label: 'Qtd Estado Goods',
-          data: [157111, 5602, 4000, 3881, 2817],
-        }
-      ]
-    },
-
-
-    qtd_estados_canceled_goods: {
-      labels: ['SP', 'NA', 'BA', 'SC', 'PA'],
-      datasets: [
-        {
-          label: 'Qtd Estados Canceled Goods',
-          data: [42571, 662, 101, 14, 5],
-        }
-      ]
-    },
+  active_counts_sum: {
+    titulo: 'Transações Finalizadas',
+    valor: 137.281,
+    color: 'rgba(49, 131, 131, 0.589)',
+  },
+  active_counts: {
+    labels: ['Agosto', 'Maio', 'Junho', 'Julho', 'Abril', 'Setembro', 'Janeiro', 'Fevereiro', 'Marco', 'Outubro', 'Novembro', 'Dezembro'],
+    datasets: [
+      {
+        label: 'Transações Finalizadas',
+        data: [111705, 7671, 5213, 3027, 2797, 1595, 1351, 1277, 1104, 971, 350, 220],
+        backgroundColor: 'rgba(49, 131, 131, 0.589)',
+        borderWidth: 2,
+        borderColor: 'rgba(49, 131, 131, 0.589)',
+        tension: 0.4,
+        fill: true,
+      }
+    ]
+  },
 
 
-    qtd_estados_finished_goods: {
-      labels: ['SP', 'MG', 'RS', 'SC', 'RJ'],
-      datasets: [
-        {
-          label: 'Qtd Estados Finished Goods',
-          data: [230, 59, 57, 26, 16],
-        }
-      ]
-    },
+  finished_counts: {
+    labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+    datasets: [
+      {
+        label: 'Finished Counts',
+        data: [12, 9, 17, 208, 105, 41, 28, 23, 10, 8, 4, 5],
+        backgroundColor: 'rgba(49, 131, 131, 0.589)',
+        borderWidth: 2,
+        borderColor: 'rgba(49, 131, 131, 0.589)',
+        tension: 0.4,
+        fill: true,
+      }
+    ]
+  },
 
 
-    qtd_estados_active_goods: {
-      labels: ['SP', 'MG', 'RS', 'SC', 'RJ'],
-      datasets: [
-        {
-          label: 'Qtd Estados Active Goods',
-          data: [230, 59, 57, 26, 16],
-        }
-      ]
-    },
+
+  qtd_estado_goods: {
+    labels: ['SP', 'CE', 'MG', 'NA', 'PE'],
+    datasets: [
+      {
+        label: 'Transações de Produtos por Estado',
+        data: [157111, 5602, 4000, 3881, 2817],
+        backgroundColor: '#1168ab',
+      }
+    ]
+  },
 
 
-    qtd_estado_services: {
-      labels: ['SP', 'NA', 'RJ', 'PA', 'SC'],
-      datasets: [
-        {
-          label: 'Qtd Estado Services',
-          data: [510, 233, 84, 20, 16],
-        }
-      ]
-    },
+  qtd_estados_canceled_goods: {
+    labels: ['SP', 'NA', 'BA', 'SC', 'PA'],
+    datasets: [
+      {
+        label: 'Transações de Produtos por Estado Canceladas',
+        data: [42571, 662, 101, 14, 5],
+        backgroundColor: '#ef3333e8',
+      }
+    ]
+  },
 
 
-    qtd_estados_cancelados_services: {
-      labels: ['NA', 'SP'],
-      datasets: [
-        {
-          label: 'Qtd Estados Cancelados Services',
-          data: [111, 17],
-        }
-      ]
-    },
+  qtd_estados_finished_goods: {
+    labels: ['SP', 'MG', 'RS', 'SC', 'RJ'],
+    datasets: [
+      {
+        label: 'Transações de Produtos por Estado Finalizadas',
+        data: [230, 59, 57, 26, 16],
+        backgroundColor: 'rgba(49, 131, 131, 0.589)',
+        fill: true
+      }
+    ]
+  },
 
 
-    qtd_estados_finished_services: {
-      labels: ['SP', 'SC', 'NA', 'RJ', 'MG'],
-      datasets: [
-        {
-          label: 'Qtd Estados Finished Services',
-          data: [16, 15, 8, 2, 1],
-        }
-      ]
-    },
+  qtd_estados_active_goods: {
+    labels: ['SP', 'MG', 'RS', 'SC', 'RJ'],
+    datasets: [
+      {
+        label: 'Qtd Estados Active Goods',
+        data: [230, 59, 57, 26, 16],
+      }
+    ]
+  },
 
 
-    qtd_estados_active_services: {
-      labels: ['SP', 'SC', 'NA', 'RJ', 'MG'],
-      datasets: [
-        {
-          label: 'Qtd Estados Active Services',
-          data: [16, 15, 8, 2, 1],
-        }
-      ]
-    },
-  };
-  
+  qtd_estado_services: {
+    labels: ['SP', 'NA', 'RJ', 'PA', 'SC'],
+    datasets: [
+      {
+        label: 'Transações de Serviço por Estado',
+        data: [510, 233, 84, 20, 16],
+        backgroundColor: '#1168ab',
+        tension: 0.4,
+      }
+    ]
+  },
+
+
+  qtd_estados_cancelados_services: {
+    labels: ['NA', 'SP'],
+    datasets: [
+      {
+        label: 'Transações de Serviço por Estado Canceladas',
+        data: [111, 17],
+        backgroundColor: '#ef3333e8',
+      }
+    ]
+  },
+
+
+  qtd_estados_finished_services: {
+    labels: ['SP', 'SC', 'NA', 'RJ', 'MG'],
+    datasets: [
+      {
+        label: 'Transações de Serviço por Estado Finalizadas',
+        data: [16, 15, 8, 2, 1],
+        backgroundColor: 'rgba(49, 131, 131, 0.589)',
+      }
+    ]
+  },
+
+
+  qtd_estados_active_services: {
+    labels: ['SP', 'SC', 'NA', 'RJ', 'MG'],
+    datasets: [
+      {
+        label: 'Qtd Estados Active Services',
+        data: [16, 15, 8, 2, 1],
+      }
+    ]
+  },
+
+};

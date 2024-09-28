@@ -1,23 +1,39 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .container {
   display: grid;
   grid-template-columns: repeat(6, 1fr); /* 6 colunas de largura igual */
   grid-template-rows: repeat(6, 1fr);    /* 6 linhas de altura ajustada */
   gap: 20px; 
-  height: 100vh;
   width: 100%;
   padding: 20px; 
   box-sizing: border-box; /* Garante que padding e border não aumentem a largura total */
+  background-color: #171c30;
   
 }
 
 .servicesEstado, .kindEstado, 
 .mais-TransacoesServicesGoods, 
-.EstadoCampeaoServices, .EstadoCampeaoGoods {
-  background-color: #fff;
-  border: 1px solid #ddd; 
+.EstadoCampeaoServices, 
+.EstadoCampeaoGoods, .EstadoCampeaoGoodsFinished, .EstadoCampeaoGoodsCanceled,
+.EstadoCampeaoServices, .EstadoCampeaoServicesFinished, .EstadoCampeaoServicesCanceled{
+  border: 1px solid #3c3c49; 
   box-sizing: border-box;
   border-radius: 5px;
+  color: aliceblue;
 }
+
+.cardTotal, .cardSucces, .cardFail {
+  min-height: 100px; /* Define uma altura mínima consistente para evitar grandes espaços */
+  display: flex;
+  align-items: center; /* Alinha o conteúdo verticalmente */
+  justify-content: center; /* Alinha o conteúdo horizontalmente */
+}
+
 
 .cardTotal {
   grid-column: 1 / 3; /* Ocupa as colunas 1 e 2 */
@@ -34,30 +50,61 @@
   grid-row: 1;        /* Primeira linha */
 }
 
+.sectionTime {
+  grid-column: 1 / 7; /* Ocupa todas as colunas de 1 a 6 */
+  grid-row: 2;        /* Segunda linha */
+}
+
+.sectionKind {
+  grid-column: 1 / 7; /* Ocupa todas as colunas de 1 a 6 */
+  grid-row: 5;        /* Quarta linha */
+}
+
 .servicesEstado {
-  grid-column: 1 / 4; /* Ocupa as colunas 1 a 3 */
-  grid-row: 2;        /* Segunda linha */
-}
-
-.kindEstado {
-  grid-column: 4 / 7; /* Ocupa as colunas 4 a 6 */
-  grid-row: 2;        /* Segunda linha */
-}
-
-.mais-TransacoesServicesGoods {
-  grid-column: 1 / 7; /* Ocupa todas as colunas */
+  grid-column: 1 / 4; /* Ocupa as colunas de 1 a 3 */
   grid-row: 3;        /* Terceira linha */
 }
 
-.EstadoCampeaoServices {
-  grid-column: 1 / 4; /* Ocupa as colunas 1 a 3 */
-  grid-row: 4;        /* Quarta linha */
+.kindEstado {
+  grid-column: 4 / 7; /* Ocupa as colunas de 4 a 6 */
+  grid-row: 3;        /* Terceira linha */
+}
+
+.mais-TransacoesServicesGoods {
+  grid-column: 1 / 7; /* Ocupa todas as colunas de 1 a 6 */
+  grid-row: 4;        /* Quinta linha */
 }
 
 .EstadoCampeaoGoods {
-  grid-column: 4 / 7; /* Ocupa as colunas 4 a 6 */
-  grid-row: 4;        /* Quarta linha */
+  grid-column: 1 / 3; /* Ocupa as colunas de 1 a 2 */
+  grid-row: 6;        /* Sexta linha */
 }
+
+.EstadoCampeaoGoodsFinished {
+  grid-column: 3 / 5; /* Ocupa as colunas de 3 a 4 */
+  grid-row: 6;        /* Sexta linha */
+}
+
+.EstadoCampeaoGoodsCanceled {
+  grid-column: 5 / 7; /* Ocupa as colunas de 5 a 6 */
+  grid-row: 6;        /* Sexta linha */
+}
+
+.EstadoCampeaoServices {
+  grid-column: 1 / 3; /* Ocupa as colunas de 1 a 2 */
+  grid-row: 7;        /* Sétima linha */
+}
+
+.EstadoCampeaoServicesFinished {
+  grid-column: 3 / 5; /* Ocupa as colunas de 3 a 4 */
+  grid-row: 7;        /* Sétima linha */
+}
+
+.EstadoCampeaoServicesCanceled {
+  grid-column: 5 / 7; /* Ocupa as colunas de 5 a 6 */
+  grid-row: 7;        /* Sétima linha */
+}
+
 
 /* Estilos responsivos apenas para mobile */
 @media (max-width: 768px) {
