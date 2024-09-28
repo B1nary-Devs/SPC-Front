@@ -11,11 +11,13 @@ import NewReleasesIcon from '@mui/icons-material/NewReleases';
 import Barchart from '../../components/Charts/Barchart'
 import Linechart from '../../components/Charts/Linechart'
 import DoughnutChart from '../../components/Charts/DoughnutChart'
+import Menu from '../../components/menu';
 
 
 export default function Dashboard() {
     return (
         <div className="content">
+            <Menu/>
             <div className='dashboard-container'>
                 <div className="dashboard-header">
                     <img src='https://github.com/WallaceHS20/IMAGE-REPOSITORY/blob/main/vecteezy_3d-girl-character-standing-riding-a-rocket_35680942.png?raw=true' />
