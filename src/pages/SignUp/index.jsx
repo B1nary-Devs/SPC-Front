@@ -21,6 +21,9 @@ export default function CadastroLogin(){
             email: formData.get('email'),
             senha: formData.get('senha'),
         };
+
+        console.log('renderizado');
+        
         
         setDataForm(data)
 

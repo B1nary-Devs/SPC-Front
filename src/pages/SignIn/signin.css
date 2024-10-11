@@ -1,0 +1,14 @@
+.container-painel-signin{
+    background-color: red;
+    display: flex;
+}
+
+.container-login-info{
+    background-color: blue;
+
+    padding: 10px;
+}
+
+.container-login-info img{
+    width: 150px;
+}
