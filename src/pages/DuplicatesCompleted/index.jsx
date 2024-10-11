@@ -25,6 +25,9 @@ export default function DuplicatesCompleted() {
         loadDuplicatesDue();
     }, []);
 
+
+    
+
     async function loadDuplicatesDue() {
         fetch('/completedDue.json')
             .then((response) => response.json())
