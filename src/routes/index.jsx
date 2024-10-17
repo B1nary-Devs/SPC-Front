@@ -6,6 +6,7 @@ import Home from '../pages/Home'
 import DuplicatesDue from '../pages/DuplicatesDue'
 import DuplicatesExpired from '../pages/DuplicatesExpired'
 import DuplicatesCompleted from '../pages/DuplicatesCompleted'
+import Sacados from '../pages/Sacados'
 
 function RoutesApp(){
     return(
@@ -14,9 +15,10 @@ function RoutesApp(){
             <Route path='/home' element={<Home/>}/>
             <Route path='/' element={<CadastroLogin/>}/>
             <Route path='/signin' element={<SignIn/>}/>
-            <Route path='/duplicatesDue' element={<DuplicatesDue/>}/>
-            <Route path='/expiredDue' element={<DuplicatesExpired/>}/>
-            <Route path='/completedDue' element={<DuplicatesCompleted/>}/>
+            <Route path='/duplicatas/duplicatesDue' element={<DuplicatesDue/>}/>
+            <Route path='/duplicatas/expiredDue' element={<DuplicatesExpired/>}/>
+            <Route path='/duplicatas/completedDue' element={<DuplicatesCompleted/>}/>
+            <Route path='/sacados' element={<Sacados/>}/>
         </Routes>
     )
 }

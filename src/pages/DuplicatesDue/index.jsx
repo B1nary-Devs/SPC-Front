@@ -12,6 +12,7 @@ import SearchInput from '../../components/SearchInput';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import './duplicatesDue.css';
+import AppMenu from '../../components/AppMenu/AppMenu';
 
 import { useState, useEffect } from 'react';
 
@@ -73,7 +74,7 @@ export default function DuplicatesDue() {
 
     return (
         <div>
-            <Menu />
+            <AppMenu />
             <div className="content">
                 <h1 className='title-duplicate-due'>Duplicatas a vencer</h1>
                 <span className='description-duplicate-due'>A vencer</span>

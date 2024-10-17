@@ -13,6 +13,7 @@ import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import ActionButton from '../../components/ActionButton';
 import '../DuplicatesDue/duplicatesDue.css';
+import AppMenu from '../../components/AppMenu/AppMenu';
 
 import PaymentsIcon from '@mui/icons-material/Payments';
 
@@ -76,7 +77,7 @@ export default function DuplicatesExpired() {
 
     return (
         <div>
-            <Menu />
+            <AppMenu />
             <div className="content">
                 <h1 className='title-duplicate-due'>Duplicatas vencidas</h1>
                 <span className='description-duplicate-due'>Vencidas</span>

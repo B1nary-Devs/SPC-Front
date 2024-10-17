@@ -11,12 +11,16 @@ import Stack from '@mui/material/Stack';
 import SearchInput from '../../components/SearchInput';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
-import './duplicatesDue.css';
+import ActionButton from '../../components/ActionButton';
+import '../DuplicatesDue/duplicatesDue.css';
 import AppMenu from '../../components/AppMenu/AppMenu';
+import api from '../../api/api'
+
+import PaymentsIcon from '@mui/icons-material/Payments';
 
 import { useState, useEffect } from 'react';
 
-export default function DuplicatesCompleted() {
+export default function Sacados() {
     const [duplicatesDue, setDuplicatesDue] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage] = useState(8);
@@ -24,18 +28,29 @@ export default function DuplicatesCompleted() {
 
     useEffect(() => {
         loadDuplicatesDue();
+        loadSacados();
     }, []);
 
-
-    
-
     async function loadDuplicatesDue() {
-        fetch('/completedDue.json')
+        fetch('/expiredDue.json')
             .then((response) => response.json())
             .then((jsonData) => {
                 setDuplicatesDue(jsonData);
             })
             .catch((error) => console.error('Erro ao carregar o arquivo JSON:', error));
+    }
+
+    async function loadSacados() {
+        const response = await api.get('/assignee/listAssignees')
+
+        .then((result)=>{
+            console.log(result);
+        })
+
+        .catch((error) =>{
+            console.log(error.message);
+            
+        })
     }
 
     // Filtra as duplicatas com base no mês selecionado
@@ -77,10 +92,10 @@ export default function DuplicatesCompleted() {
 
     return (
         <div>
-            <AppMenu/>
+            <AppMenu />
             <div className="content">
-                <h1 className='title-duplicate-due'>Duplicatas Finalizadas</h1>
-                <span className='description-duplicate-due'>Finalizadas</span>
+                <h1 className='title-duplicate-due'>Duplicatas vencidas</h1>
+                <span className='description-duplicate-due'>Vencidas</span>
                 <div className="duplicatesDueHeader">
                     <SearchInput />
                     <TextField
@@ -112,6 +127,7 @@ export default function DuplicatesCompleted() {
                                     <TableCell align="center">E-mail</TableCell>
                                     <TableCell align="center">Vencimento</TableCell>
                                     <TableCell align="center">Status</TableCell>
+                                    <TableCell align="center">Ações</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -128,9 +144,14 @@ export default function DuplicatesCompleted() {
                                         <TableCell align="center">{row.email}</TableCell>
                                         <TableCell align="center">{row.vencimento}</TableCell>
                                         <TableCell align="center">
-                                            <span className='status-duplicate finalizadas'>
+                                            <span className='status-duplicate vencido'>
                                                 {row.status}
                                             </span>
+                                        </TableCell>
+                                        <TableCell align="center">
+                                            <ActionButton text={'Registrar\npagamento'}>
+                                                <PaymentsIcon />
+                                            </ActionButton>
                                         </TableCell>
                                     </TableRow>
                                 ))}
