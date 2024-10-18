@@ -5,116 +5,82 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Menu from '../../components/menu';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import SearchInput from '../../components/SearchInput';
-import TextField from '@mui/material/TextField';
+import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import ActionButton from '../../components/ActionButton';
 import '../DuplicatesDue/duplicatesDue.css';
 import AppMenu from '../../components/AppMenu/AppMenu';
-import api from '../../api/api'
-
-import PaymentsIcon from '@mui/icons-material/Payments';
-
+import Button from '@mui/material/Button';
+import api from '../../api/api';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useState, useEffect } from 'react';
 
 export default function Sacados() {
-    const [duplicatesDue, setDuplicatesDue] = useState([]);
+    const [user, setUser] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage] = useState(8);
-    const [selectedMonth, setSelectedMonth] = useState('00');
+    const [selectedProfile, setSelectedProfile] = useState(''); // Estado para o perfil selecionado
+    const [searchTerm, setSearchTerm] = useState(''); // Estado para o termo de busca
 
     useEffect(() => {
-        loadDuplicatesDue();
-        loadSacados();
+        loadUsers();
     }, []);
 
-    async function loadDuplicatesDue() {
-        fetch('/expiredDue.json')
-            .then((response) => response.json())
-            .then((jsonData) => {
-                setDuplicatesDue(jsonData);
-            })
-            .catch((error) => console.error('Erro ao carregar o arquivo JSON:', error));
-    }
+    async function loadUsers() {
+        try {
+            const response = await api.get('/users/usersList');
+            setUser(response.data);
+            console.log(response.data);
 
-    async function loadSacados() {
-        const response = await api.get('/assignee/listAssignees')
-
-        .then((result)=>{
-            console.log(result);
-        })
-
-        .catch((error) =>{
+        } catch (error) {
             console.log(error.message);
-            
-        })
-    }
-
-    // Filtra as duplicatas com base no mês selecionado
-    const getFilteredRows = () => {
-        if (selectedMonth === '00') {
-            return duplicatesDue;
         }
-        return duplicatesDue.filter(row => {
-            const vencimentoDate = new Date(row.vencimento);
-            return vencimentoDate.getMonth() + 1 === parseInt(selectedMonth); // Mês é 0-indexado
-        });
-    };
+    }
 
     // Calcular o número total de páginas
-    const totalPages = Math.ceil(getFilteredRows().length / rowsPerPage);
+    const totalPages = Math.ceil(user.length / rowsPerPage);
+
     const handleChangePage = (event, value) => {
         setCurrentPage(value);
     };
 
-    // Obter as linhas para a página atual
-    const startIndex = (currentPage - 1) * rowsPerPage;
-    const currentRows = getFilteredRows().slice(startIndex, startIndex + rowsPerPage);
+    const filteredRows = user.filter(row => {
+        const matchesProfile = selectedProfile ? row.perfil === selectedProfile : true;
+        const matchesSearch = row.nome.toLowerCase().includes(searchTerm.toLowerCase());
+        return matchesProfile && matchesSearch;
+    });
 
-    const months = [
-        { value: '00', label: 'Todos' },
-        { value: '01', label: 'Janeiro' },
-        { value: '02', label: 'Fevereiro' },
-        { value: '03', label: 'Março' },
-        { value: '04', label: 'Abril' },
-        { value: '05', label: 'Maio' },
-        { value: '06', label: 'Junho' },
-        { value: '07', label: 'Julho' },
-        { value: '08', label: 'Agosto' },
-        { value: '09', label: 'Setembro' },
-        { value: '10', label: 'Outubro' },
-        { value: '11', label: 'Novembro' },
-        { value: '12', label: 'Dezembro' }
-    ];
+
+    const startIndex = (currentPage - 1) * rowsPerPage;
+    const currentRows = filteredRows.slice(startIndex, startIndex + rowsPerPage);
 
     return (
         <div>
             <AppMenu />
             <div className="content">
-                <h1 className='title-duplicate-due'>Duplicatas vencidas</h1>
-                <span className='description-duplicate-due'>Vencidas</span>
+                <h1 className='title-duplicate-due'>Usuários</h1>
+                <span className='description-duplicate-due'>Usuários</span>
                 <div className="duplicatesDueHeader">
-                    <SearchInput />
-                    <TextField
-                        id="outlined-select-month"
-                        select
-                        label="Mês"
-                        value={selectedMonth} // Usando o estado para controlar o valor
-                        onChange={(e) => {
-                            setSelectedMonth(e.target.value);
-                            setCurrentPage(1); // Resetar para a primeira página ao mudar o filtro
-                        }}
-                        style={{ width: '200px' }}
+                    <Select
+                        value={selectedProfile}
+                        onChange={(e) => setSelectedProfile(e.target.value)}
+                        displayEmpty
+                        sx={{ marginLeft: 2 }}
                     >
-                        {months.map((option) => (
-                            <MenuItem key={option.value} value={option.value}>
-                                {option.label}
-                            </MenuItem>
-                        ))}
-                    </TextField>
+                        <MenuItem value="">
+                            <em>Todos</em>
+                        </MenuItem>
+                        <MenuItem value="Sacado">Sacado</MenuItem>
+                        <MenuItem value="Cessionária">Cessionária</MenuItem>
+                    </Select>
+
+                    <SearchInput
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}  // Atualiza o termo de busca
+                    />
                 </div>
                 <div className="tableDuplicateDue">
                     <TableContainer component={Paper}>
@@ -122,36 +88,29 @@ export default function Sacados() {
                             <TableHead>
                                 <TableRow>
                                     <TableCell>Nome</TableCell>
+                                    <TableCell align="center">Tipo</TableCell>
                                     <TableCell align="center">Empresa</TableCell>
                                     <TableCell align="center">Contato</TableCell>
                                     <TableCell align="center">E-mail</TableCell>
-                                    <TableCell align="center">Vencimento</TableCell>
-                                    <TableCell align="center">Status</TableCell>
                                     <TableCell align="center">Ações</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {currentRows.map((row) => (
                                     <TableRow
-                                        key={row.nome}
+                                        key={row._id}
                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                     >
                                         <TableCell component="th" scope="row">
                                             {row.nome}
                                         </TableCell>
-                                        <TableCell align="center">{row.empresa}</TableCell>
-                                        <TableCell align="center">{row.contato}</TableCell>
+                                        <TableCell align="center">{row.perfil}</TableCell>
+                                        <TableCell align="center">teste@gmail.com</TableCell>
+                                        <TableCell align="center">{row.celular}</TableCell>
                                         <TableCell align="center">{row.email}</TableCell>
-                                        <TableCell align="center">{row.vencimento}</TableCell>
                                         <TableCell align="center">
-                                            <span className='status-duplicate vencido'>
-                                                {row.status}
-                                            </span>
-                                        </TableCell>
-                                        <TableCell align="center">
-                                            <ActionButton text={'Registrar\npagamento'}>
-                                                <PaymentsIcon />
-                                            </ActionButton>
+                                            <Button variant="text" endIcon={<EditIcon sx={{ color: 'grey.900' }} />} sx={{ marginRight: 1 }}></Button>
+                                            <Button variant="text" endIcon={<DeleteIcon sx={{ color: 'grey.900' }} />}></Button>
                                         </TableCell>
                                     </TableRow>
                                 ))}

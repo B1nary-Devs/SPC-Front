@@ -66,20 +66,6 @@ const NAVIGATION = [
   },
 ];
 
-const demoTheme = extendTheme({
-  colorSchemes: { light: true, dark: true },
-  colorSchemeSelector: 'class',
-  breakpoints: {
-    values: {
-      xs: 0,
-      sm: 600,
-      md: 600,
-      lg: 1200,
-      xl: 1536,
-    },
-  },
-});
-
 function useDemoRouter(initialPath) {
   const [pathname, setPathname] = React.useState(initialPath);
 
@@ -94,30 +80,22 @@ function useDemoRouter(initialPath) {
   return router;
 }
 
-const Skeleton = styled('div')(({ theme, height }) => ({
-  backgroundColor: theme.palette.action.hover,
-  borderRadius: theme.shape.borderRadius,
-  height,
-  content: '" "',
-}));
-
 export default function AppMenu(props) {
   const { window } = props;
 
   const router = useDemoRouter('/dashboard');
 
-  // Remove this const when copying and pasting into your project.
-  const demoWindow = window ? window() : undefined;
+  // Estado para controlar se o menu está aberto ou fechado
+  const [menuOpen, setMenuOpen] = React.useState(false);
 
   return (
     <AppProvider
       navigation={NAVIGATION}
-      theme={demoTheme}
-      window={demoWindow}
     >
-      <DashboardLayout>
-        <PageContainer>
-        </PageContainer>
+      <DashboardLayout
+        menuOpen={menuOpen}  // Define o estado do menu
+        onMenuToggle={() => setMenuOpen(false)}  // Alterna entre abrir e fechar o menu
+      >
       </DashboardLayout>
     </AppProvider>
   );
