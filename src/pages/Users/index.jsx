@@ -10,15 +10,15 @@ import Stack from '@mui/material/Stack';
 import SearchInput from '../../components/SearchInput';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import '../DuplicatesDue/duplicatesDue.css';
 import AppMenu from '../../components/AppMenu/AppMenu';
-import Button from '@mui/material/Button';
 import api from '../../api/api';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useState, useEffect } from 'react';
+import ModalEdit from '../../components/ModalEdit';
+import ModalDelete from '../../components/ModalDelete';
 
-export default function Sacados() {
+export default function Users() {
     const [user, setUser] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage] = useState(8);
@@ -68,7 +68,7 @@ export default function Sacados() {
                         value={selectedProfile}
                         onChange={(e) => setSelectedProfile(e.target.value)}
                         displayEmpty
-                        sx={{ marginLeft: 2 }}
+                        sx={{ marginLeft: 2, minWidth: 200 }}
                     >
                         <MenuItem value="">
                             <em>Todos</em>
@@ -109,8 +109,12 @@ export default function Sacados() {
                                         <TableCell align="center">{row.celular}</TableCell>
                                         <TableCell align="center">{row.email}</TableCell>
                                         <TableCell align="center">
-                                            <Button variant="text" endIcon={<EditIcon sx={{ color: 'grey.900' }} />} sx={{ marginRight: 1 }}></Button>
-                                            <Button variant="text" endIcon={<DeleteIcon sx={{ color: 'grey.900' }} />}></Button>
+                                            <ModalEdit user={row}>
+                                                <EditIcon sx={{ color: 'grey.900' }} />
+                                            </ModalEdit>
+                                            <ModalDelete user={row}>
+                                                <DeleteIcon sx={{ color: 'grey.900' }} />
+                                            </ModalDelete>
                                         </TableCell>
                                     </TableRow>
                                 ))}
