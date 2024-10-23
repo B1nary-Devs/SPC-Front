@@ -112,7 +112,7 @@ export default function Users() {
                                             <ModalEdit user={row}>
                                                 <EditIcon sx={{ color: 'grey.900' }} />
                                             </ModalEdit>
-                                            <ModalDelete user={row}>
+                                            <ModalDelete user={row} reloadUsers={loadUsers}>
                                                 <DeleteIcon sx={{ color: 'grey.900' }} />
                                             </ModalDelete>
                                         </TableCell>

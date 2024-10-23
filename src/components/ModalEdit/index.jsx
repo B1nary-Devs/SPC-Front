@@ -10,6 +10,9 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import './ModalEdit.css'; 
+import api from '../../api/api';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export default function ModalEdit({ children, user }) {
     const [open, setOpen] = React.useState(false);
@@ -21,8 +24,8 @@ export default function ModalEdit({ children, user }) {
 
         if (user) {
             setValue('nome', user.nome);
-            setValue('tipo', user.perfil); 
-            setValue('contato', user.celular);
+            setValue('perfil', user.perfil); 
+            setValue('celular', user.celular);
             setValue('email', user.email);
         }
     };
@@ -33,6 +36,19 @@ export default function ModalEdit({ children, user }) {
 
     const onSubmit = (data) => {
         console.log('Dados submetidos:', data);
+        const response = api.put(`/users/${user.cpf_cnpj}/update`, {
+            ...data,
+            cpf_cnpj: user.cpf_cnpj
+        })
+
+        .then((result) => {
+            toast.success('Edição concçuída')
+        })
+
+        .catch((error) =>{
+            console.log(error);
+            
+        })
         handleClose(); 
     };
 
@@ -69,7 +85,7 @@ export default function ModalEdit({ children, user }) {
                             <FormControl fullWidth variant="outlined" error={!!errors.tipo}>
                                 <InputLabel id="tipo-label">Tipo</InputLabel>
                                 <Controller
-                                    name="tipo"
+                                    name="perfil"
                                     control={control}
                                     defaultValue="" 
                                     render={({ field }) => (
@@ -94,10 +110,10 @@ export default function ModalEdit({ children, user }) {
                         
                         <div className="modalEdit-form-group">
                             <TextField
-                                label="Contato"
+                                label="celular"
                                 variant="outlined"
                                 fullWidth
-                                {...register('contato', { required: 'Contato é obrigatório' })}
+                                {...register('celular', { required: 'Contato é obrigatório' })}
                                 error={!!errors.contato}
                                 helperText={errors.contato ? errors.contato.message : ''}
                             />
