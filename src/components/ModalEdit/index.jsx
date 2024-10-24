@@ -9,7 +9,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
-import './ModalEdit.css'; 
+import './ModalEdit.css';
 import api from '../../api/api';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -24,7 +24,7 @@ export default function ModalEdit({ children, user }) {
 
         if (user) {
             setValue('nome', user.nome);
-            setValue('perfil', user.perfil); 
+            setValue('perfil', user.perfil);
             setValue('celular', user.celular);
             setValue('email', user.email);
         }
@@ -41,15 +41,18 @@ export default function ModalEdit({ children, user }) {
             cpf_cnpj: user.cpf_cnpj
         })
 
-        .then((result) => {
-            toast.success('Edição concçuída')
-        })
+            .then((result) => {
+                toast.success('Edição concçuída')
+            })
 
-        .catch((error) =>{
-            console.log(error);
-            
-        })
-        handleClose(); 
+            .catch((error) => {
+                console.log('====================================');
+                console.log(error);
+                console.log('====================================');
+                toast.error('Falha ao registrar')
+
+            })
+        handleClose();
     };
 
     return (
@@ -69,7 +72,7 @@ export default function ModalEdit({ children, user }) {
                 </div>
                 <div className="modalEdit-body">
                     <form className='modalEdit-form' onSubmit={handleSubmit(onSubmit)}>
-                                                <div className="modalEdit-form-group">
+                        <div className="modalEdit-form-group">
                             <TextField
                                 label="Nome"
                                 variant="outlined"
@@ -80,14 +83,14 @@ export default function ModalEdit({ children, user }) {
                             />
                         </div>
 
-                        
+
                         <div className="modalEdit-form-group">
                             <FormControl fullWidth variant="outlined" error={!!errors.tipo}>
                                 <InputLabel id="tipo-label">Tipo</InputLabel>
                                 <Controller
                                     name="perfil"
                                     control={control}
-                                    defaultValue="" 
+                                    defaultValue=""
                                     render={({ field }) => (
                                         <Select
                                             labelId="tipo-label"
@@ -107,7 +110,7 @@ export default function ModalEdit({ children, user }) {
                             </FormControl>
                         </div>
 
-                        
+
                         <div className="modalEdit-form-group">
                             <TextField
                                 label="celular"
@@ -119,7 +122,7 @@ export default function ModalEdit({ children, user }) {
                             />
                         </div>
 
-                        
+
                         <div className="modalEdit-form-group">
                             <TextField
                                 label="Email"

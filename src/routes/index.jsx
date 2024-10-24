@@ -13,7 +13,7 @@ function RoutesApp(){
         <Routes>
             <Route path='/dashboard' element={<Dashboard/>}/>
             <Route path='/home' element={<Home/>}/>
-            <Route path='/' element={<CadastroUsuario/>}/>
+            <Route path='/signUp' element={<CadastroUsuario/>}/>
             <Route path='/login' element={<SignIn/>}/>
             <Route path='/duplicatas/duplicatesDue' element={<DuplicatesDue/>}/>
             <Route path='/duplicatas/expiredDue' element={<DuplicatesExpired/>}/>

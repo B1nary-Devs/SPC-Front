@@ -4,7 +4,9 @@
     justify-content: center;
     min-height: 100vh;
     width: 100%;
-    padding: 24px;
+    max-width: 1000px; /* Define uma largura máxima */
+    margin: 0 auto;
+    padding: 24px;   
 }
 
 .form-container h1,
@@ -12,37 +14,36 @@ h4 {
     margin-bottom: 20px;
 }
 
-.form-container h4{
+.form-container h4 {
     color: #7c7c7c;
 }
 
+
 .form-content {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    gap: 50px; 
 }
 
 .form-group {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    gap: 40px;
-    margin-bottom: 24px;
+    display: contents; /* Faz com que os elementos dentro fiquem dentro do grid */
 }
 
 .form-field {
-    flex: 1;
+    width: 100%;
 }
 
+/* Botões em linha */
 .button-group {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     padding: 30px;
+    grid-column: span 2;
 }
 
-
 .button-cadastroUsuario {
-    flex: 1;
+    flex: none;
     background-color: #D0D0D0;
     color: rgb(0, 0, 0);
     border: 1px solid #0e0d0d;
@@ -50,9 +51,21 @@ h4 {
     border-radius: 4px;
     cursor: pointer;
     margin-top: 10px;
-    max-width: 150px;
+    width: 250px;
 }
 
 .button-cadastroUsuario:hover {
     background-color: #aaaaaa;
+}
+
+/* Responsividade: em telas menores, empilha os campos */
+@media (max-width: 768px) {
+    .form-content {
+        grid-template-columns: 1fr; /* Uma coluna apenas em telas pequenas */
+    }
+
+    .button-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
 }
