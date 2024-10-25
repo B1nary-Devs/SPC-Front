@@ -2,14 +2,19 @@ import React from 'react';
 import './SignIn.css';
 import TextField from '@mui/material/TextField';
 import { useForm } from 'react-hook-form';
-
+import api from '../../api/api'
+import { useNavigate } from 'react-router-dom';
 
 import EmailIcon from '@mui/icons-material/Email';
 import KeyIcon from '@mui/icons-material/Key';
 import InputAdornment from '@mui/material/InputAdornment';
+import { toast } from 'react-toastify';
 
 
 export default function SignIn() {
+
+    const navigate = useNavigate();
+
     const {
         register,
         handleSubmit,
@@ -17,15 +22,25 @@ export default function SignIn() {
     } = useForm();
 
     const onSubmit = (data) => {
-        console.log(data);
+        const resposnse = api.post('/users/login', data)
+
+            .then((result) => {
+                toast.success('Bem vindo!')
+                console.log(result);
+                localStorage.setItem('UserData', JSON.stringify(result.data[0]));
+                navigate('/home')
+            })
+
+            .catch((error) => {
+                console.log(error);
+                toast.error(error.message)
+            })
     };
 
     return (
         <div className='signUp'>
 
-            <section className="signUp-logo">
-                <img className='signUp-logo-img' src='./logoB1.png' alt="Logo" />
-            </section>
+            <img className='signUp-logo-img' src='./logoB1.png' alt="Logo" />
 
             <section className="signUp-login-painel">
                 <img className='signUp-login-painel-img' src='./scorelg.png' alt="Painel Logo" />
@@ -53,7 +68,7 @@ export default function SignIn() {
                                         <InputAdornment position='start'>
                                             <EmailIcon
                                                 sx={{
-                                                    color: errors.password ? 'var(--color-error)' : 'inherit', // Condiciona a cor do ícone
+                                                    color: errors.senha ? 'var(--color-error)' : 'inherit', // Condiciona a cor do ícone
                                                 }} />
                                         </InputAdornment>
                                     ),
@@ -65,17 +80,17 @@ export default function SignIn() {
                         />
 
                         <TextField
-                            {...register('password', {
+                            {...register('senha', {
                                 required: 'Senha é obrigatória',
                                 minLength: {
                                     value: 6,
                                     message: 'A senha deve ter pelo menos 6 caracteres',
                                 },
                             })}
-                            error={!!errors.password}
-                            helperText={errors.password ? errors.password.message : ''}
+                            error={!!errors.senha}
+                            helperText={errors.senha ? errors.senha.message : ''}
                             label="Senha"
-                            type="password"
+                            type="senha"
                             fullWidth
                             margin="normal"
                             slotProps={{
@@ -84,7 +99,7 @@ export default function SignIn() {
                                         <InputAdornment position='start'>
                                             <KeyIcon
                                                 sx={{
-                                                    color: errors.password ? '#dd5b59' : 'inherit', // Condiciona a cor do ícone
+                                                    color: errors.senha ? '#dd5b59' : 'inherit', // Condiciona a cor do ícone
                                                 }} />
                                         </InputAdornment>
                                     ),

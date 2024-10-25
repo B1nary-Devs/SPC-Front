@@ -3,10 +3,16 @@ import RoutesApp from './routes';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { Provider } from 'react-redux';
+
+import store from './store';
+
 function App() {
   return (
     <BrowserRouter>
-      <RoutesApp />
+      <Provider store={store}>
+        <RoutesApp />
+      </Provider>
       <ToastContainer
         autoClose={5000}
         theme="dark"
