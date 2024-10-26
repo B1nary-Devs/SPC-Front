@@ -2,6 +2,7 @@ import { BrowserRouter } from 'react-router-dom'
 import RoutesApp from './routes';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './App.css'
 
 import { Provider } from 'react-redux';
 

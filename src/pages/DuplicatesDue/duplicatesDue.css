@@ -1,9 +1,9 @@
-.title-duplicate-due {
+.title-due {
     font-size: 2.8rem;
     padding: 20px;
 }
 
-.description-duplicate-due {
+.description-due {
     font-size: 1rem;
     padding: 20px;
     color: #19b919;
@@ -28,7 +28,7 @@
     justify-content: end;
 }
 
-.status-duplicate {
+.status {
     padding: 7px;
     border-radius: 4px;
 }

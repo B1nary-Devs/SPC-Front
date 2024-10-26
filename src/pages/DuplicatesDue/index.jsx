@@ -5,76 +5,88 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Menu from '../../components/menu';
+import Menu from '../../components/SideBarMenu';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
-import SearchInput from '../../components/SearchInput';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
+import SearchInput from '../../components/SearchInput';
 import './duplicatesDue.css';
 import api from '../../api/api';
-import AppMenu from '../../components/AppMenu/AppMenu';
 
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
 export default function DuplicatesDue() {
-    const [duplicatesDue, setDuplicatesDue] = useState([]);
-    const [duplicateDue, setDuplicateDue] = useState([]);
+    const [duplicates, setDuplicates] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage] = useState(8);
     const [selectedMonth, setSelectedMonth] = useState('00');
 
     useEffect(() => {
-        loadDuplicatesDue();
-        loadDuplicateDue()
+        loadDuplicates();
     }, []);
 
-    async function loadDuplicatesDue() {
-        fetch('/duplicatesDue.json')
-            .then((response) => response.json())
-            .then((jsonData) => {
-                setDuplicatesDue(jsonData);
-            })
-            .catch((error) => console.error('Erro ao carregar o arquivo JSON:', error));
-    }
+    async function loadDuplicates() {
+        try {
+            const response = await api.get('/assignee/00000');
 
-    async function loadDuplicateDue(){
-        const response = api.get(`/assignee/00000/duplicatas/A vencer`)
+            if (response.data && Array.isArray(response.data.cessionaria_sacado)) {
+                const status = response.data.cessionaria_sacado.filter(
+                    (item) => item.cessionaria_sacado_duplicata_status === 'A vencer'
+                );
 
-        .then((result) =>{
-            console.log(result);
-            setDuplicateDue(result.data)
-        })
-
-        .catch((error) =>{
-            console.log(error);
-            toast.error(error.message);
-            
-        })
-    }
-
-
-    // Filtra as duplicatas com base no mês selecionado
-    const getFilteredRows = () => {
-        if (selectedMonth === '00') {
-            return duplicatesDue;
+                setDuplicates(status);
+            } else {
+                console.error('Dados da resposta estão ausentes ou inválidos');
+                toast.error('Dados da resposta estão ausentes ou inválidos.');
+            }
+        } catch (error) {
+            console.error('Erro ao fazer a requisição para a API:', error);
+            toast.error('Erro ao carregar dados das duplicatas.');
         }
-        return duplicatesDue.filter(row => {
-            const vencimentoDate = new Date(row.vencimento);
-            return vencimentoDate.getMonth() + 1 === parseInt(selectedMonth); // Mês é 0-indexado
-        });
+    }
+
+    const getFilteredRows = () => {
+        let filteredRows = duplicates;
+
+        if (selectedMonth !== '00') {
+            filteredRows = filteredRows.filter((sacado) => {
+                if (sacado.cessionaria_sacado_data_pagamento) {
+                    const pagamentoDate = new Date(sacado.cessionaria_sacado_data_pagamento);
+                    const month = pagamentoDate.getUTCMonth() + 1;
+
+                    console.log(`Data: ${sacado.cessionaria_sacado_data_pagamento}, Mês: ${month}`);
+
+                    return month === parseInt(selectedMonth);
+                }
+                return false;
+            });
+        }
+
+        if (searchTerm) {
+            filteredRows = filteredRows.filter((sacado) =>
+                sacado.cessionaria_sacado_empresa.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+        }
+
+        return filteredRows;
     };
 
-    // Calcular o número total de páginas
     const totalPages = Math.ceil(getFilteredRows().length / rowsPerPage);
+
     const handleChangePage = (event, value) => {
         setCurrentPage(value);
     };
 
-    // Obter as linhas para a página atual
     const startIndex = (currentPage - 1) * rowsPerPage;
     const currentRows = getFilteredRows().slice(startIndex, startIndex + rowsPerPage);
+
+    const handleSearchChange = (event) => {
+        setSearchTerm(event.target.value);
+        setCurrentPage(1);
+    };
 
     const months = [
         { value: '00', label: 'Todos' },
@@ -93,20 +105,25 @@ export default function DuplicatesDue() {
     ];
 
     return (
-        <div>
-            <div className="content">
-                <h1 className='title-duplicate-due'>Duplicatas a vencer</h1>
-                <span className='description-duplicate-due'>A vencer</span>
+        <>
+            <Menu />
+            <div className="content-page">
+                <h1 className='title-due'>Duplicatas a vencer</h1>
+                <span className='description-due'>A vencer</span>
                 <div className="duplicatesDueHeader">
-                    <SearchInput />
+                    <SearchInput
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                        placeholder="Pesquisar pelo nome da empresa"
+                    />
                     <TextField
                         id="outlined-select-month"
                         select
                         label="Mês"
-                        value={selectedMonth} // Usando o estado para controlar o valor
+                        value={selectedMonth}
                         onChange={(e) => {
                             setSelectedMonth(e.target.value);
-                            setCurrentPage(1); // Resetar para a primeira página ao mudar o filtro
+                            setCurrentPage(1);
                         }}
                         style={{ width: '200px' }}
                     >
@@ -130,22 +147,13 @@ export default function DuplicatesDue() {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {currentRows.map((row) => (
-                                    <TableRow
-                                        key={row.nome}
-                                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                    >
-                                        <TableCell component="th" scope="row">
-                                            {row.nome}
-                                        </TableCell>
-                                        <TableCell align="center">{row.contato}</TableCell>
-                                        <TableCell align="center">{row.email}</TableCell>
-                                        <TableCell align="center">{row.vencimento}</TableCell>
-                                        <TableCell align="center">
-                                            <span className='status-duplicate vencer'>
-                                                {row.status}
-                                            </span>
-                                        </TableCell>
+                                {currentRows.map((sacado) => (
+                                    <TableRow key={sacado.cessionaria_sacado_id}>
+                                        <TableCell>{sacado.cessionaria_sacado_empresa}</TableCell>
+                                        <TableCell align="center">{sacado.cessionaria_sacado_contato}</TableCell>
+                                        <TableCell align="center">{sacado.cessionaria_sacado_email}</TableCell>
+                                        <TableCell align="center">{sacado.cessionaria_sacado_data_pagamento}</TableCell>
+                                        <TableCell align="center">{sacado.cessionaria_sacado_duplicata_status}</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
@@ -164,6 +172,6 @@ export default function DuplicatesDue() {
                     </Stack>
                 </div>
             </div>
-        </div>
+        </>
     );
 }
