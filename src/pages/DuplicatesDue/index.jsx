@@ -12,18 +12,22 @@ import SearchInput from '../../components/SearchInput';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import './duplicatesDue.css';
+import api from '../../api/api';
 import AppMenu from '../../components/AppMenu/AppMenu';
 
 import { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 export default function DuplicatesDue() {
     const [duplicatesDue, setDuplicatesDue] = useState([]);
+    const [duplicateDue, setDuplicateDue] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage] = useState(8);
     const [selectedMonth, setSelectedMonth] = useState('00');
 
     useEffect(() => {
         loadDuplicatesDue();
+        loadDuplicateDue()
     }, []);
 
     async function loadDuplicatesDue() {
@@ -34,6 +38,22 @@ export default function DuplicatesDue() {
             })
             .catch((error) => console.error('Erro ao carregar o arquivo JSON:', error));
     }
+
+    async function loadDuplicateDue(){
+        const response = api.get(`/assignee/00000/duplicatas/A vencer`)
+
+        .then((result) =>{
+            console.log(result);
+            setDuplicateDue(result.data)
+        })
+
+        .catch((error) =>{
+            console.log(error);
+            toast.error(error.message);
+            
+        })
+    }
+
 
     // Filtra as duplicatas com base no mês selecionado
     const getFilteredRows = () => {
@@ -74,7 +94,6 @@ export default function DuplicatesDue() {
 
     return (
         <div>
-            <AppMenu />
             <div className="content">
                 <h1 className='title-duplicate-due'>Duplicatas a vencer</h1>
                 <span className='description-duplicate-due'>A vencer</span>
@@ -104,7 +123,6 @@ export default function DuplicatesDue() {
                             <TableHead>
                                 <TableRow>
                                     <TableCell>Nome</TableCell>
-                                    <TableCell align="center">Empresa</TableCell>
                                     <TableCell align="center">Contato</TableCell>
                                     <TableCell align="center">E-mail</TableCell>
                                     <TableCell align="center">Vencimento</TableCell>
@@ -120,7 +138,6 @@ export default function DuplicatesDue() {
                                         <TableCell component="th" scope="row">
                                             {row.nome}
                                         </TableCell>
-                                        <TableCell align="center">{row.empresa}</TableCell>
                                         <TableCell align="center">{row.contato}</TableCell>
                                         <TableCell align="center">{row.email}</TableCell>
                                         <TableCell align="center">{row.vencimento}</TableCell>
