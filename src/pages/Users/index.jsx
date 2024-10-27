@@ -23,8 +23,8 @@ export default function Users() {
     const [user, setUser] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage] = useState(8);
-    const [selectedProfile, setSelectedProfile] = useState(''); // Estado para o perfil selecionado
-    const [searchTerm, setSearchTerm] = useState(''); // Estado para o termo de busca
+    const [selectedProfile, setSelectedProfile] = useState(''); 
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         loadUsers();

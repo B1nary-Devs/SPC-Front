@@ -28,7 +28,7 @@ export default function SignIn() {
             const resultAction = await dispatch(loginUser(data));
 
             if (loginUser.fulfilled.match(resultAction)) {
-                navigate('/sacados');
+                navigate('/dashboard');
             } else if (loginUser.rejected.match(resultAction)) {
                 console.error('Erro ao fazer login:', resultAction.payload);
             }
@@ -99,7 +99,7 @@ export default function SignIn() {
                                         <InputAdornment position='start'>
                                             <KeyIcon
                                                 sx={{
-                                                    color: errors.senha ? '#dd5b59' : 'inherit', // Condiciona a cor do ícone
+                                                    color: errors.senha ? '#dd5b59' : 'inherit',
                                                 }} />
                                         </InputAdornment>
                                     ),
