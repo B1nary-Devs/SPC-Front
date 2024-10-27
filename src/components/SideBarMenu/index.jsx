@@ -14,7 +14,7 @@ import GroupIcon from '@mui/icons-material/Group';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import HomeIcon from '@mui/icons-material/Home';
 import { Link } from 'react-router-dom'
-
+import { useSelector } from 'react-redux';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -28,6 +28,8 @@ export default function SideBarMenu() {
 
     const [open, setOpen] = useState(false);
     const [sidebarOpen, setsidebarOpen] = useState(false);
+    const { user } = useSelector((state) => state.user);
+    const isAdminOrOperator = user.perfil === "Admin" || user.perfil === "Operador";
 
     const handleOpenClick = () => {
         setsidebarOpen(true);
@@ -44,94 +46,84 @@ export default function SideBarMenu() {
 
 
     return (
-            <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
-                <div className="sidebar-header">
-                    {sidebarOpen ? (
-                        <IconButton className="returnButton" aria-label="open" onClick={handleReturnClick}>
-                            <MenuOpenIcon sx={{ color: 'white' }} />
-                        </IconButton>
-                    ) : (
-                        <IconButton aria-label="open" onClick={handleOpenClick}>
-                            <MenuIcon sx={{ color: 'white' }} />
-                        </IconButton>
-                    )}
-                </div>
-                <ul className='sidebar-list'>
+        <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
+            <div className="sidebar-header">
+                {sidebarOpen ? (
+                    <IconButton className="returnButton" aria-label="open" onClick={handleReturnClick}>
+                        <MenuOpenIcon sx={{ color: 'white' }} />
+                    </IconButton>
+                ) : (
+                    <IconButton aria-label="open" onClick={handleOpenClick}>
+                        <MenuIcon sx={{ color: 'white' }} />
+                    </IconButton>
+                )}
+            </div>
+            <ul className='sidebar-list'>
 
-                    <Link className='sidebar-item' to={'/home'}>
-                        <li>
-                            <ListItemButton>
+                <Link className='sidebar-item' to={'/home'}>
+                    <li>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <HomeIcon sx={{ color: 'white' }} />
+                            </ListItemIcon>
+                            <ListItemText primary="Home" />
+                        </ListItemButton>
+                    </li>
+                </Link>
+
+
+                <Link className='sidebar-item' to={'/dashboard'}>
+                    <li>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <BarChartIcon sx={{ color: 'white' }} />
+                            </ListItemIcon>
+                            <ListItemText primary="Dashboard" />
+                        </ListItemButton>
+                    </li>
+                </Link>
+
+
+                <ListItemButton className='sidebar-item' onClick={handleClick}>
+                    <ListItemIcon>
+                        <FileCopyIcon sx={{ color: 'white' }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Duplicatas" />
+                    {open ? <ExpandLess /> : <ExpandMore />}
+                </ListItemButton>
+                <Collapse in={open} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+
+                        <Link className='sidebar-item' to={'/duplicatas/duplicatesDue'}>
+                            <ListItemButton sx={{ pl: 4 }}>
                                 <ListItemIcon>
-                                    <PersonIcon sx={{ color: 'white' }} />
+                                    <InsertDriveFileIcon sx={{ color: 'white' }} />
                                 </ListItemIcon>
-                                <ListItemText primary="Perfil" />
+                                <ListItemText primary="A Vencer" />
                             </ListItemButton>
-                        </li>
-                    </Link>
+                        </Link>
 
-                    <Link className='sidebar-item' to={'/home'}>
-                        <li>
-                            <ListItemButton>
+                        <Link className='sidebar-item' to={'/duplicatas/expiredDue'}>
+                            <ListItemButton sx={{ pl: 4 }}>
                                 <ListItemIcon>
-                                    <HomeIcon sx={{ color: 'white' }} />
+                                    <InsertDriveFileIcon sx={{ color: 'white' }} />
                                 </ListItemIcon>
-                                <ListItemText primary="Home" />
+                                <ListItemText primary="Vencidas" />
                             </ListItemButton>
-                        </li>
-                    </Link>
+                        </Link>
 
-
-                    <Link className='sidebar-item' to={'/dashboard'}>
-                        <li>
-                            <ListItemButton>
+                        <Link className='sidebar-item' to={'/duplicatas/completedDue'}>
+                            <ListItemButton sx={{ pl: 4 }}>
                                 <ListItemIcon>
-                                    <BarChartIcon sx={{ color: 'white' }} />
+                                    <InsertDriveFileIcon sx={{ color: 'white' }} />
                                 </ListItemIcon>
-                                <ListItemText primary="Dashboard" />
+                                <ListItemText primary="Finalizadas" />
                             </ListItemButton>
-                        </li>
-                    </Link>
+                        </Link>
+                    </List>
+                </Collapse>
 
-
-                    <ListItemButton className='sidebar-item' onClick={handleClick}>
-                        <ListItemIcon>
-                            <FileCopyIcon sx={{ color: 'white' }} />
-                        </ListItemIcon>
-                        <ListItemText primary="Duplicatas" />
-                        {open ? <ExpandLess /> : <ExpandMore />}
-                    </ListItemButton>
-                    <Collapse in={open} timeout="auto" unmountOnExit>
-                        <List component="div" disablePadding>
-
-                            <Link className='sidebar-item' to={'/duplicatas/expiredDue'}>
-                                <ListItemButton sx={{ pl: 4 }}>
-                                    <ListItemIcon>
-                                        <InsertDriveFileIcon sx={{ color: 'white' }} />
-                                    </ListItemIcon>
-                                    <ListItemText primary="A Vencer" />
-                                </ListItemButton>
-                            </Link>
-
-                            <Link className='sidebar-item' to={'/duplicatas/duplicatesDue'}>
-                                <ListItemButton sx={{ pl: 4 }}>
-                                    <ListItemIcon>
-                                        <InsertDriveFileIcon sx={{ color: 'white' }} />
-                                    </ListItemIcon>
-                                    <ListItemText primary="Vencidas" />
-                                </ListItemButton>
-                            </Link>
-
-                            <Link className='sidebar-item' to={'/duplicatas/completedDue'}>
-                                <ListItemButton sx={{ pl: 4 }}>
-                                    <ListItemIcon>
-                                        <InsertDriveFileIcon sx={{ color: 'white' }} />
-                                    </ListItemIcon>
-                                    <ListItemText primary="Finalizadas" />
-                                </ListItemButton>
-                            </Link>
-                        </List>
-                    </Collapse>
-
+                {user.perfil != 'Admin' || user.perfil != 'Operador'? (
                     <Link to={'/sacados'}>
                         <li>
                             <ListItemButton>
@@ -142,7 +134,20 @@ export default function SideBarMenu() {
                             </ListItemButton>
                         </li>
                     </Link>
-                </ul>
-            </div>
+                ) : (
+                    <Link to={'/users'}>
+                        <li>
+                            <ListItemButton>
+                                <ListItemIcon>
+                                    <PersonIcon sx={{ color: 'white' }} />
+                                </ListItemIcon>
+                                <ListItemText primary="Usuários" />
+                            </ListItemButton>
+                        </li>
+                    </Link>
+                )}
+
+            </ul>
+        </div>
     )
 }

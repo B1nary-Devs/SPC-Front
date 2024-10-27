@@ -2,17 +2,18 @@ import React from 'react';
 import './SignIn.css';
 import TextField from '@mui/material/TextField';
 import { useForm } from 'react-hook-form';
-import api from '../../api/api'
 import { useNavigate } from 'react-router-dom';
 
 import EmailIcon from '@mui/icons-material/Email';
 import KeyIcon from '@mui/icons-material/Key';
 import InputAdornment from '@mui/material/InputAdornment';
-import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../../redux/user/userSlice'
 
 
 export default function SignIn() {
 
+    const dispatch = useDispatch()
     const navigate = useNavigate();
 
     const {
@@ -21,21 +22,20 @@ export default function SignIn() {
         formState: { errors },
     } = useForm();
 
-    const onSubmit = (data) => {
-        const resposnse = api.post('/users/login', data)
+    // OPERAÇÃO LOGIN
+    const onSubmit = async (data) => {
+        try {
+            const resultAction = await dispatch(loginUser(data));
 
-            .then((result) => {
-                toast.success('Bem vindo!')
-                console.log(result);
-                localStorage.setItem('UserData', JSON.stringify(result.data[0]));
-                navigate('/home')
-            })
-
-            .catch((error) => {
-                console.log(error);
-                toast.error(error.message)
-            })
-    };
+            if (loginUser.fulfilled.match(resultAction)) {
+                navigate('/sacados');
+            } else if (loginUser.rejected.match(resultAction)) {
+                console.error('Erro ao fazer login:', resultAction.payload);
+            }
+        } catch (error) {
+            console.error('Erro ao despachar a ação de login:', error);
+        }
+    }
 
     return (
         <div className='signUp'>

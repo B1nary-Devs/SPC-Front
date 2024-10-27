@@ -13,11 +13,14 @@ import MenuItem from '@mui/material/MenuItem';
 import SearchInput from '../../components/SearchInput';
 import './duplicatesDue.css';
 import api from '../../api/api';
+import Button from '@mui/material/Button';
+import { useSelector } from 'react-redux';
 
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
 export default function DuplicatesDue() {
+    const { user } = useSelector((state) => state.user);
     const [duplicates, setDuplicates] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
@@ -30,11 +33,11 @@ export default function DuplicatesDue() {
 
     async function loadDuplicates() {
         try {
-            const response = await api.get('/assignee/00000');
+            const response = await api.get(`/assignee/${user.cpf_cnpj}`);
 
             if (response.data && Array.isArray(response.data.cessionaria_sacado)) {
                 const status = response.data.cessionaria_sacado.filter(
-                    (item) => item.cessionaria_sacado_duplicata_status === 'A vencer'
+                    (item) => item.cessionaria_sacado_duplicata_status === 'A Vencer'
                 );
 
                 setDuplicates(status);
@@ -104,6 +107,12 @@ export default function DuplicatesDue() {
         { value: '12', label: 'Dezembro' }
     ];
 
+    function formatDate(dateString) {
+        if (!dateString) return '';
+        const [year, month, day] = dateString.split('-');
+        return `${day}/${month}/${year}`;
+    }
+
     return (
         <>
             <Menu />
@@ -152,8 +161,10 @@ export default function DuplicatesDue() {
                                         <TableCell>{sacado.cessionaria_sacado_empresa}</TableCell>
                                         <TableCell align="center">{sacado.cessionaria_sacado_contato}</TableCell>
                                         <TableCell align="center">{sacado.cessionaria_sacado_email}</TableCell>
-                                        <TableCell align="center">{sacado.cessionaria_sacado_data_pagamento}</TableCell>
-                                        <TableCell align="center">{sacado.cessionaria_sacado_duplicata_status}</TableCell>
+                                        <TableCell align="center">{formatDate(sacado.cessionaria_sacado_data_pagamento)}</TableCell>
+                                        <TableCell align="center">
+                                                <Button color='warning' variant="contained">{sacado.cessionaria_sacado_duplicata_status}</Button>    
+                                        </TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
