@@ -8,7 +8,7 @@ export default function SearchInput({ value, onChange }) {
   return (
     <Paper
       component="form"
-      sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
+      sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 280 }}
     >
       <InputBase
         sx={{ ml: 1, flex: 1 }}

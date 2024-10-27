@@ -8,7 +8,7 @@ export const loginUser = createAsyncThunk(
     async (data, { rejectWithValue }) => {
         try {
             const response = await api.post('/users/login', data);
-            return response.data[0];
+            return response.data;
         } catch (error) {
             toast.error('Erro ao fazer login.');
             return rejectWithValue(error.response.data || error.message);

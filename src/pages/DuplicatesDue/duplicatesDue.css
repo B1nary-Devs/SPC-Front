@@ -50,3 +50,18 @@
     color: #1B8506;
     border: solid 1px #1B8506;
 }
+
+@media (max-width: 600px) {
+
+    .duplicatesDueHeader {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items:start
+    }
+
+    .duplicatePagination {
+        justify-content: center;
+    }
+
+}
