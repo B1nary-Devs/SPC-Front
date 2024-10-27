@@ -1,15 +1,26 @@
 import { Routes, Route } from 'react-router-dom'
-import CadastroLogin from '../pages/Cadastro_login'
-import Dashboard from '../pages/Dashboard/Dashboard'
+import CadastroUsuario from '../pages/SignUp'
+import Dashboard from '../pages/Dashboard'
+import SignIn from '../pages/SignIn'
 import Home from '../pages/Home'
+import DuplicatesDue from '../pages/DuplicatesDue'
+import DuplicatesExpired from '../pages/DuplicatesExpired'
+import DuplicatesCompleted from '../pages/DuplicatesCompleted'
+import Sacados from '../pages/Sacados'
+import Users from '../pages/Users'
 
 function RoutesApp(){
     return(
         <Routes>
-            {/* <Route path='/cadastroLogin' element={<CadastroLogin/>}/> */}
             <Route path='/dashboard' element={<Dashboard/>}/>
             <Route path='/home' element={<Home/>}/>
-            <Route path='/' element={<CadastroLogin/>}/>
+            <Route path='/signUp' element={<CadastroUsuario/>}/>
+            <Route path='/' element={<SignIn/>}/>
+            <Route path='/duplicatas/duplicatesDue' element={<DuplicatesDue/>}/>
+            <Route path='/duplicatas/expiredDue' element={<DuplicatesExpired/>}/>
+            <Route path='/duplicatas/completedDue' element={<DuplicatesCompleted/>}/>
+            <Route path='/sacados' element={<Sacados/>}/>
+            <Route path='/users' element={<Users/>}/>
         </Routes>
     )
 }
