@@ -17,13 +17,13 @@ const NAVIGATION = [
   },
   {
     segment: 'home',
-    title: 'User',
-    icon: <PersonIcon />,
-  },
-  {
-    segment: 'home',
     title: 'Home',
     icon: <HomeIcon />,
+  },
+  {
+    segment: 'users',
+    title: 'Users',
+    icon: <GroupIcon />,
   },
   {
     segment: 'dashboard',
@@ -62,7 +62,7 @@ const NAVIGATION = [
   {
     segment: 'sacados',
     title: 'Sacados',
-    icon: <GroupIcon />,
+    icon: <PersonIcon />,
   },
 ];
 

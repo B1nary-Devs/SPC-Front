@@ -17,6 +17,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useState, useEffect } from 'react';
 import ModalEdit from '../../components/ModalEdit';
 import ModalDelete from '../../components/ModalDelete';
+import Menu from '../../components/SideBarMenu';
 
 export default function Users() {
     const [user, setUser] = useState([]);
@@ -58,11 +59,11 @@ export default function Users() {
     const currentRows = filteredRows.slice(startIndex, startIndex + rowsPerPage);
 
     return (
-        <div>
-            <AppMenu />
-            <div className="content">
-                <h1 className='title-duplicate-due'>Usuários</h1>
-                <span className='description-duplicate-due'>Usuários</span>
+        <>
+            <Menu />
+            <div className="content-page">
+                <h1 className='title-due'>Usuários</h1>
+                <span className='description-due'>Usuários</span>
                 <div className="duplicatesDueHeader">
                     <Select
                         value={selectedProfile}
@@ -73,8 +74,9 @@ export default function Users() {
                         <MenuItem value="">
                             <em>Todos</em>
                         </MenuItem>
+                        <MenuItem value="Operador">Operador</MenuItem>
                         <MenuItem value="Sacado">Sacado</MenuItem>
-                        <MenuItem value="Cessionária">Cessionária</MenuItem>
+                        <MenuItem value="Cessionaria">Cessionária</MenuItem>
                     </Select>
 
                     <SearchInput
@@ -89,7 +91,6 @@ export default function Users() {
                                 <TableRow>
                                     <TableCell>Nome</TableCell>
                                     <TableCell align="center">Tipo</TableCell>
-                                    <TableCell align="center">Empresa</TableCell>
                                     <TableCell align="center">Contato</TableCell>
                                     <TableCell align="center">E-mail</TableCell>
                                     <TableCell align="center">Ações</TableCell>
@@ -105,7 +106,6 @@ export default function Users() {
                                             {row.nome}
                                         </TableCell>
                                         <TableCell align="center">{row.perfil}</TableCell>
-                                        <TableCell align="center">teste@gmail.com</TableCell>
                                         <TableCell align="center">{row.celular}</TableCell>
                                         <TableCell align="center">{row.email}</TableCell>
                                         <TableCell align="center">
@@ -134,6 +134,6 @@ export default function Users() {
                     </Stack>
                 </div>
             </div>
-        </div>
+        </>
     );
 }

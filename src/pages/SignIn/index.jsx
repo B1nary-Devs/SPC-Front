@@ -2,30 +2,45 @@ import React from 'react';
 import './SignIn.css';
 import TextField from '@mui/material/TextField';
 import { useForm } from 'react-hook-form';
-
+import { useNavigate } from 'react-router-dom';
 
 import EmailIcon from '@mui/icons-material/Email';
 import KeyIcon from '@mui/icons-material/Key';
 import InputAdornment from '@mui/material/InputAdornment';
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../../redux/user/userSlice'
 
 
 export default function SignIn() {
+
+    const dispatch = useDispatch()
+    const navigate = useNavigate();
+
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm();
 
-    const onSubmit = (data) => {
-        console.log(data);
-    };
+    // OPERAÇÃO LOGIN
+    const onSubmit = async (data) => {
+        try {
+            const resultAction = await dispatch(loginUser(data));
+
+            if (loginUser.fulfilled.match(resultAction)) {
+                navigate('/sacados');
+            } else if (loginUser.rejected.match(resultAction)) {
+                console.error('Erro ao fazer login:', resultAction.payload);
+            }
+        } catch (error) {
+            console.error('Erro ao despachar a ação de login:', error);
+        }
+    }
 
     return (
         <div className='signUp'>
 
-            <section className="signUp-logo">
-                <img className='signUp-logo-img' src='./logoB1.png' alt="Logo" />
-            </section>
+            <img className='signUp-logo-img' src='./logoB1.png' alt="Logo" />
 
             <section className="signUp-login-painel">
                 <img className='signUp-login-painel-img' src='./scorelg.png' alt="Painel Logo" />
@@ -53,7 +68,7 @@ export default function SignIn() {
                                         <InputAdornment position='start'>
                                             <EmailIcon
                                                 sx={{
-                                                    color: errors.password ? 'var(--color-error)' : 'inherit', // Condiciona a cor do ícone
+                                                    color: errors.senha ? 'var(--color-error)' : 'inherit', // Condiciona a cor do ícone
                                                 }} />
                                         </InputAdornment>
                                     ),
@@ -65,17 +80,17 @@ export default function SignIn() {
                         />
 
                         <TextField
-                            {...register('password', {
+                            {...register('senha', {
                                 required: 'Senha é obrigatória',
                                 minLength: {
                                     value: 6,
                                     message: 'A senha deve ter pelo menos 6 caracteres',
                                 },
                             })}
-                            error={!!errors.password}
-                            helperText={errors.password ? errors.password.message : ''}
+                            error={!!errors.senha}
+                            helperText={errors.senha ? errors.senha.message : ''}
                             label="Senha"
-                            type="password"
+                            type="senha"
                             fullWidth
                             margin="normal"
                             slotProps={{
@@ -84,7 +99,7 @@ export default function SignIn() {
                                         <InputAdornment position='start'>
                                             <KeyIcon
                                                 sx={{
-                                                    color: errors.password ? '#dd5b59' : 'inherit', // Condiciona a cor do ícone
+                                                    color: errors.senha ? '#dd5b59' : 'inherit', // Condiciona a cor do ícone
                                                 }} />
                                         </InputAdornment>
                                     ),

@@ -13,17 +13,16 @@ import MenuItem from '@mui/material/MenuItem';
 import SearchInput from '../../components/SearchInput';
 import api from '../../api/api';
 import '../DuplicatesDue/duplicatesDue.css';
-import ActionButton from '../../components/ActionButton';
+import ScoreDialog from '../../components/ScoreDialog';
 import Button from '@mui/material/Button';
-import { useSelector } from 'react-redux';
 
+import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
-export default function DuplicatesExpired() {
+export default function Sacados() {
     const { user } = useSelector((state) => state.user);
     const [duplicates, setDuplicates] = useState([]);
-    const [cessionaria, setCessionaria] = useState({});
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage] = useState(8);
@@ -38,16 +37,7 @@ export default function DuplicatesExpired() {
             const response = await api.get(`/assignee/${user.cpf_cnpj}`);
 
             if (response.data && Array.isArray(response.data.cessionaria_sacado)) {
-                const status = response.data.cessionaria_sacado.filter(
-                    (item) => item.cessionaria_sacado_duplicata_status === 'Vencido'
-                );
-
-                setDuplicates(status);
-                setCessionaria({
-                    cnpj: response.data.cessionaria_cnpj,
-                    nome: response.data.cessionaria_nome,
-                    score: response.data.cessionaria_score,
-                });
+                setDuplicates(response.data.cessionaria_sacado);
             } else {
                 console.error('Dados da resposta estão ausentes ou inválidos');
                 toast.error('Dados da resposta estão ausentes ou inválidos.');
@@ -117,13 +107,12 @@ export default function DuplicatesExpired() {
         return `${day}/${month}/${year}`;
     }
 
-
     return (
         <>
             <Menu />
             <div className="content-page">
-                <h1 className='title-due'>Duplicatas Vencidas</h1>
-                <span className='description-due'>Vencidas</span>
+                <h1 className='title-due'>Sacados</h1>
+                <span className='description-due'>Sacados</span>
                 <div className="duplicatesDueHeader">
                     <SearchInput
                         value={searchTerm}
@@ -169,10 +158,21 @@ export default function DuplicatesExpired() {
                                         <TableCell align="center">{sacado.cessionaria_sacado_email}</TableCell>
                                         <TableCell align="center">{formatDate(sacado.cessionaria_sacado_data_pagamento)}</TableCell>
                                         <TableCell align="center">
-                                                <Button color='error' variant="contained">{sacado.cessionaria_sacado_duplicata_status}</Button>    
+                                            <Button
+                                                variant="contained"
+                                                color={
+                                                    sacado.cessionaria_sacado_duplicata_status === 'Vencido'
+                                                        ? 'error'
+                                                        : sacado.cessionaria_sacado_duplicata_status === 'A Vencer'
+                                                            ? 'warning'
+                                                            : 'success'
+                                                }
+                                            >
+                                                {sacado.cessionaria_sacado_duplicata_status}
+                                            </Button>
                                         </TableCell>
                                         <TableCell align="center">
-                                            <ActionButton sacado={sacado} loadDuplicates={loadDuplicates} cessionaria={cessionaria} />
+                                            <ScoreDialog sacado={sacado.cessionaria_sacado_empresa} score={sacado.cessionaria_sacado_score} />
                                         </TableCell>
                                     </TableRow>
                                 ))}
