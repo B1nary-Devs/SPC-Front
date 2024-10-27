@@ -14,7 +14,7 @@ import api from '../../api/api';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-export default function ModalEdit({ children, user }) {
+export default function ModalEdit({ children, user, reloadUsers }) {
     const [open, setOpen] = React.useState(false);
 
     const { control, register, handleSubmit, setValue, formState: { errors } } = useForm();
@@ -34,25 +34,20 @@ export default function ModalEdit({ children, user }) {
         setOpen(false);
     };
 
-    const onSubmit = (data) => {
-        console.log('Dados submetidos:', data);
-        const response = api.put(`/users/${user.cpf_cnpj}/update`, {
-            ...data,
-            cpf_cnpj: user.cpf_cnpj
-        })
-
-            .then((result) => {
-                toast.success('Edição Concluída')
-            })
-
-            .catch((error) => {
-                console.log('====================================');
-                console.log(error);
-                console.log('====================================');
-                toast.error('Falha ao registrar')
-
-            })
-        handleClose();
+    const onSubmit = async (data) => {
+        try {
+            await api.put(`/users/${user.cpf_cnpj}/update`, {
+                ...data,
+                cpf_cnpj: user.cpf_cnpj
+            });
+            toast.success('Edição Concluída');
+            handleClose();
+            // Call reloadUsers to refresh the user list
+            if (reloadUsers) reloadUsers();
+        } catch (error) {
+            console.error(error);
+            toast.error('Falha ao registrar');
+        }
     };
 
     return (
@@ -83,7 +78,6 @@ export default function ModalEdit({ children, user }) {
                             />
                         </div>
 
-
                         <div className="modalEdit-form-group">
                             <FormControl fullWidth variant="outlined" error={!!errors.tipo}>
                                 <InputLabel id="tipo-label">Tipo</InputLabel>
@@ -110,18 +104,16 @@ export default function ModalEdit({ children, user }) {
                             </FormControl>
                         </div>
 
-
                         <div className="modalEdit-form-group">
                             <TextField
                                 label="celular"
                                 variant="outlined"
                                 fullWidth
                                 {...register('celular', { required: 'Contato é obrigatório' })}
-                                error={!!errors.contato}
-                                helperText={errors.contato ? errors.contato.message : ''}
+                                error={!!errors.celular}
+                                helperText={errors.celular ? errors.celular.message : ''}
                             />
                         </div>
-
 
                         <div className="modalEdit-form-group">
                             <TextField
@@ -148,7 +140,7 @@ export default function ModalEdit({ children, user }) {
                         </div>
 
                         <div className="modalEdit-form-group modalEdit-submit">
-                            <Button className='send-edit-button' type="submit" >
+                            <Button className='send-edit-button' type="submit">
                                 Enviar
                             </Button>
                         </div>
@@ -158,3 +150,4 @@ export default function ModalEdit({ children, user }) {
         </React.Fragment>
     );
 }
+

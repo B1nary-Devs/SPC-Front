@@ -23,7 +23,7 @@ export default function Users() {
     const [user, setUser] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage] = useState(8);
-    const [selectedProfile, setSelectedProfile] = useState(''); 
+    const [selectedProfile, setSelectedProfile] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
@@ -109,7 +109,7 @@ export default function Users() {
                                         <TableCell align="center">{row.celular}</TableCell>
                                         <TableCell align="center">{row.email}</TableCell>
                                         <TableCell align="center">
-                                            <ModalEdit user={row}>
+                                            <ModalEdit user={row} reloadUsers={loadUsers}>
                                                 <EditIcon sx={{ color: 'grey.900' }} />
                                             </ModalEdit>
                                             <ModalDelete user={row} reloadUsers={loadUsers}>
@@ -119,6 +119,7 @@ export default function Users() {
                                     </TableRow>
                                 ))}
                             </TableBody>
+
                         </Table>
                     </TableContainer>
                 </div>
