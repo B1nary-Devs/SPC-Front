@@ -42,7 +42,7 @@ export default function ModalEdit({ children, user }) {
         })
 
             .then((result) => {
-                toast.success('Edição concçuída')
+                toast.success('Edição Concluída')
             })
 
             .catch((error) => {
