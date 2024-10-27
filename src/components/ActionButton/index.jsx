@@ -42,7 +42,7 @@ function PaymentDialog({ open, onClose, sacado, cessionaria, loadDuplicates }) {
                 "cessionaria_sacado": {
                     ...sacado,
                     "cessionaria_sacado_data_pagamento": data.paymentDate,
-                    "cessionaria_sacado_duplicata_status": "A vencer"
+                    "cessionaria_sacado_duplicata_status": "A Vencer"
                 }
             });
 
