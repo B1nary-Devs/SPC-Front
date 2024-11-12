@@ -36,26 +36,34 @@ export default function Sacados() {
         try {
             const response = await api.get(`/assignee/${user.cpf_cnpj}`);
 
-            if (response.data && Array.isArray(response.data.cessionaria_sacado)) {
-                setDuplicates(response.data.cessionaria_sacado);
-            } else {
-                console.error('Dados da resposta estão ausentes ou inválidos');
-                toast.error('Dados da resposta estão ausentes ou inválidos.');
+            if (response.data) {
+                if (Array.isArray(response.data.cessionaria_sacado)) {
+                    setDuplicates(response.data.cessionaria_sacado);
+                    console.log(duplicates);
+
+                } else if (typeof response.data.cessionaria_sacado === 'object') {
+                    setDuplicates([response.data.cessionaria_sacado]);
+                } else {
+                    console.error('Dados da resposta estão ausentes ou inválidos');
+                    toast.error('Dados da resposta estão ausentes ou inválidos.');
+                }
             }
+
         } catch (error) {
             console.error('Erro ao fazer a requisição para a API:', error);
             toast.error('Erro ao carregar dados das duplicatas.');
         }
     }
 
+
     const getFilteredRows = () => {
         let filteredRows = duplicates;
 
         if (selectedMonth !== '00') {
             filteredRows = filteredRows.filter((sacado) => {
-                if (sacado.cessionaria_sacado_data_pagamento) {
-                    const pagamentoDate = new Date(sacado.cessionaria_sacado_data_pagamento);
-                    const month = pagamentoDate.getUTCMonth() + 1;
+                if (sacado.cessionaria_sacado_duplicadas_data_final) {
+                    const vencimentoDate = new Date(sacado.cessionaria_sacado_duplicadas_data_final);
+                    const month = vencimentoDate.getUTCMonth() + 1;
                     return month === parseInt(selectedMonth);
                 }
                 return false;
@@ -64,7 +72,7 @@ export default function Sacados() {
 
         if (searchTerm) {
             filteredRows = filteredRows.filter((sacado) =>
-                sacado.cessionaria_sacado_empresa.toLowerCase().includes(searchTerm.toLowerCase())
+                sacado.cessionaria_sacado_nome.toLowerCase().includes(searchTerm.toLowerCase())
             );
         }
 
@@ -153,10 +161,12 @@ export default function Sacados() {
                             <TableBody>
                                 {currentRows.map((sacado) => (
                                     <TableRow key={sacado.cessionaria_sacado_id}>
-                                        <TableCell>{sacado.cessionaria_sacado_empresa}</TableCell>
-                                        <TableCell align="center">{sacado.cessionaria_sacado_contato}</TableCell>
-                                        <TableCell align="center">{sacado.cessionaria_sacado_email}</TableCell>
-                                        <TableCell align="center">{formatDate(sacado.cessionaria_sacado_data_pagamento)}</TableCell>
+                                        <TableCell>{sacado.cessionaria_sacado_nome || 'Não informado'}</TableCell>
+                                        <TableCell align="center">{sacado.cessionaria_sacado_contato || 'Não informado'}</TableCell>
+                                        <TableCell align="center">{sacado.cessionaria_sacado_email || 'Não informado'}</TableCell>
+                                        <TableCell align="center">
+                                            {formatDate(sacado.cessionaria_sacado_duplicadas_data_final) || 'Não informado'}
+                                        </TableCell>
                                         <TableCell align="center">
                                             <Button
                                                 variant="contained"
@@ -172,13 +182,14 @@ export default function Sacados() {
                                             </Button>
                                         </TableCell>
                                         <TableCell align="center">
-                                            <ScoreDialog sacado={sacado.cessionaria_sacado_empresa} score={sacado.cessionaria_sacado_score} />
+                                            <ScoreDialog sacado={sacado.cessionaria_sacado_empresa || 'Não informado'} score={sacado.cessionaria_sacado_score || 'Não informado'} />
                                         </TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
                         </Table>
                     </TableContainer>
+
                 </div>
                 <div className='duplicatePagination'>
                     <Stack spacing={2}>

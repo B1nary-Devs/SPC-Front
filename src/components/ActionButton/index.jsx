@@ -41,8 +41,8 @@ function PaymentDialog({ open, onClose, sacado, cessionaria, loadDuplicates }) {
                 "cessionaria_score": cessionaria.score,
                 "cessionaria_sacado": {
                     ...sacado,
-                    "cessionaria_sacado_data_pagamento": data.paymentDate,
-                    "cessionaria_sacado_duplicata_status": "A Vencer"
+                    "cessionaria_sacado_duplicadas_data_final": data.paymentDate,
+                    "cessionaria_sacado_duplicata_status": "finalizado"
                 }
             });
 
@@ -63,7 +63,7 @@ function PaymentDialog({ open, onClose, sacado, cessionaria, loadDuplicates }) {
     return (
         <Dialog fullWidth open={open} onClose={() => onClose(null)}>
             <DialogTitle>
-                Registrar pagamento para {sacado.cessionaria_sacado_empresa} ({cessionaria.nome})
+                Registrar pagamento para {sacado.cessionaria_sacado_nome} 
             </DialogTitle>
             <DialogContent>
                 <form onSubmit={handleSubmit(onSubmit)}>

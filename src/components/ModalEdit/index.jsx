@@ -95,6 +95,7 @@ export default function ModalEdit({ children, user, reloadUsers }) {
                                                 <em>Selecione o Tipo</em>
                                             </MenuItem>
                                             <MenuItem value="Sacado">Sacado</MenuItem>
+                                            <MenuItem value="Operador">Operador</MenuItem>
                                             <MenuItem value="Cessionaria">Cessionária</MenuItem>
                                         </Select>
                                     )}

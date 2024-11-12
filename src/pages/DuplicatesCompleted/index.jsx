@@ -10,7 +10,7 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
-import SearchInput from '../../components/SearchInput'; 
+import SearchInput from '../../components/SearchInput';
 import api from '../../api/api';
 import '../DuplicatesDue/duplicatesDue.css'
 import Button from '@mui/material/Button';
@@ -40,7 +40,7 @@ export default function DuplicatesCompleted() {
 
             if (response.data && Array.isArray(response.data.cessionaria_sacado)) {
                 const status = response.data.cessionaria_sacado.filter(
-                    (item) => item.cessionaria_sacado_duplicata_status === 'Finalizado'
+                    (item) => item.cessionaria_sacado_duplicata_status === 'finalizado'
                 );
 
                 setDuplicates(status);
@@ -59,12 +59,9 @@ export default function DuplicatesCompleted() {
 
         if (selectedMonth !== '00') {
             filteredRows = filteredRows.filter((sacado) => {
-                if (sacado.cessionaria_sacado_data_pagamento) {
-                    const pagamentoDate = new Date(sacado.cessionaria_sacado_data_pagamento);
-                    const month = pagamentoDate.getUTCMonth() + 1;
-
-                    console.log(`Data: ${sacado.cessionaria_sacado_data_pagamento}, Mês: ${month}`);
-
+                if (sacado.cessionaria_sacado_duplicadas_data_final) {
+                    const vencimentoDate = new Date(sacado.cessionaria_sacado_duplicadas_data_final);
+                    const month = vencimentoDate.getUTCMonth() + 1;
                     return month === parseInt(selectedMonth);
                 }
                 return false;
@@ -73,7 +70,7 @@ export default function DuplicatesCompleted() {
 
         if (searchTerm) {
             filteredRows = filteredRows.filter((sacado) =>
-                sacado.cessionaria_sacado_empresa.toLowerCase().includes(searchTerm.toLowerCase())
+                sacado.cessionaria_sacado_nome.toLowerCase().includes(searchTerm.toLowerCase())
             );
         }
 
@@ -120,8 +117,8 @@ export default function DuplicatesCompleted() {
         <>
             <Menu />
             <div className="content-page">
-            <h1 className='title-due'>Duplicatas Finalizadas</h1>
-            <span className='description-due'>Finalizado</span>
+                <h1 className='title-due'>Duplicatas Finalizadas</h1>
+                <span className='description-due'>Finalizado</span>
                 <div className="duplicatesDueHeader">
                     <SearchInput
                         value={searchTerm}
@@ -161,12 +158,23 @@ export default function DuplicatesCompleted() {
                             <TableBody>
                                 {currentRows.map((sacado) => (
                                     <TableRow key={sacado.cessionaria_sacado_id}>
-                                        <TableCell>{sacado.cessionaria_sacado_empresa}</TableCell>
-                                        <TableCell align="center">{sacado.cessionaria_sacado_contato}</TableCell>
-                                        <TableCell align="center">{sacado.cessionaria_sacado_email}</TableCell>
-                                        <TableCell align="center">{formatDate(sacado.cessionaria_sacado_data_pagamento)}</TableCell>
+                                        <TableCell>{sacado.cessionaria_sacado_nome}</TableCell>
+                                        <TableCell align="center">{sacado.cessionaria_sacado_contato || 'Não informado'}</TableCell>
+                                        <TableCell align="center">{sacado.cessionaria_sacado_email || 'Não informado'}</TableCell>
+                                        <TableCell align="center">{formatDate(sacado.cessionaria_sacado_duplicadas_data_final)}</TableCell>
                                         <TableCell align="center">
-                                                <Button color='success' variant="contained">{sacado.cessionaria_sacado_duplicata_status}</Button>    
+                                            <Button
+                                                variant="contained"
+                                                color={
+                                                    sacado.cessionaria_sacado_duplicata_status === 'vencida'
+                                                        ? 'error'
+                                                        : sacado.cessionaria_sacado_duplicata_status === 'A Vencer'
+                                                            ? 'warning'
+                                                            : 'success'
+                                                }
+                                            >
+                                                {sacado.cessionaria_sacado_duplicata_status}
+                                            </Button>
                                         </TableCell>
                                     </TableRow>
                                 ))}
