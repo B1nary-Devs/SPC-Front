@@ -17,6 +17,9 @@ import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import FlipToFrontIcon from '@mui/icons-material/FlipToFront';
 
 import './index.css';
 import { logoutUser } from '../../redux/user/userSlice';
@@ -169,6 +172,39 @@ export default function SideBarMenu() {
                 )}
 
                 <li>
+                    <Link className='sidebar-item' to={'/mapa'}>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <ReportGmailerrorredIcon sx={{ color: 'white' }} />
+                            </ListItemIcon>
+                            <ListItemText primary="Praça de Pagamento" />
+                        </ListItemButton>
+                    </Link>
+                </li>
+
+                <li>
+                    <Link className='sidebar-item' to={'/dashboard'}>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <LocationOnIcon sx={{ color: 'white' }} />
+                            </ListItemIcon>
+                            <ListItemText primary="Anomalias" />
+                        </ListItemButton>
+                    </Link>
+                </li>
+
+                <li>
+                    <Link className='sidebar-item' to={'/dashboard'}>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <FlipToFrontIcon sx={{ color: 'white' }} />
+                            </ListItemIcon>
+                            <ListItemText primary="Conciliação Mensal" />
+                        </ListItemButton>
+                    </Link>
+                </li>
+
+                <li>
                     <Link className='sidebar-item' onClick={handleLogout} to={'/'}>
                         <ListItemButton>
                             <ListItemIcon>
@@ -178,6 +214,7 @@ export default function SideBarMenu() {
                         </ListItemButton>
                     </Link>
                 </li>
+
             </ul>
         </div>
     );

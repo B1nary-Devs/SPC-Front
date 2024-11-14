@@ -10,6 +10,7 @@ import Sacados from '../pages/Sacados'
 import Users from '../pages/Users'
 import Profile from '../pages/Profile'
 import ShowTermo from '../pages/ShowModal'
+import Mapa from '../pages/Mapa'
 
 function RoutesApp(){
     return(
@@ -25,6 +26,7 @@ function RoutesApp(){
             <Route path='/duplicatas/completedDue' element={<DuplicatesCompleted/>}/>
             <Route path='/sacados' element={<Sacados/>}/>
             <Route path='/users' element={<Users/>}/>
+            <Route path='/mapa' element={<Mapa/>}/>
         </Routes>
     )
 }
