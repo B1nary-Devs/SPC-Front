@@ -1,17 +1,10 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
-import Button from '@mui/material/Button';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import IconButton from '@mui/material/IconButton';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { LinearProgress } from '@mui/material';
+import './drawer.css'
 
 export default function DataDrawer() {
     const [isOpen, setIsOpen] = React.useState(false);
@@ -22,41 +15,6 @@ export default function DataDrawer() {
         }
         setIsOpen(open);
     };
-
-    const list = () => (
-        <Box
-            sx={{ width: 250 }}
-            role="presentation"
-            onClick={toggleDrawer(false)}
-            onKeyDown={toggleDrawer(false)}
-        >
-            <List>
-                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                    <ListItem key={text} disablePadding>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                            </ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
-            </List>
-            <Divider />
-            <List>
-                {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                    <ListItem key={text} disablePadding>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                            </ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
-            </List>
-        </Box>
-    );
 
     return (
         <div>
@@ -78,7 +36,24 @@ export default function DataDrawer() {
                 open={isOpen}
                 onClose={toggleDrawer(false)}
             >
-                {list()}
+                <div className="corpo-drawer">
+                    <h3>Total</h3>
+                    <p>2500</p>
+                    <h4>Duplicatas</h4>
+                    <h5>Estados que possuem mais acúmulo</h5>
+                    <div className="duplicatas-estatistica">
+                        <span>BA</span>
+                        <LinearProgress variant="determinate" value={67}
+                            sx={{ height: 10, marginTop: '5px' , backgroundColor: '#f1f1f1', '& .MuiLinearProgress-bar': { backgroundColor: '#ff0000' }, borderRadius: '8px' }}
+                        />
+                    </div>
+                    <div className="duplicatas-estatistica">
+                        <span>BA</span>
+                        <LinearProgress variant="determinate" value={67}
+                            sx={{ height: 10, marginTop: '5px' , backgroundColor: '#f1f1f1', '& .MuiLinearProgress-bar': { backgroundColor: '#ff0000' }, borderRadius: '8px' }}
+                        />
+                    </div>
+                </div>
             </Drawer>
         </div>
     );
