@@ -17,7 +17,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Loader from '../../components/Loader'
 
 import TermsModal from '../../components/TermoCondicoes/ModalTermoCondicoes';
-
+import Menu from '../../components/SideBarMenu';
 import { useForm } from 'react-hook-form';
 
 import { useDispatch } from 'react-redux';
@@ -73,182 +73,174 @@ export default function SignUp() {
   };
 
   const handleCloseModal = () => {
-    setModalOpen(false); 
-};
+    setModalOpen(false);
+  };
 
   return (
-    <div className='signUp'>
-      {loader && <Loader/>}
-      <img className='signUp-logo-img' src='./logob1.png' alt="Logo" />
-      <section className="signUp-login-painel">
-        <img className='signUp-login-painel-img' src='./scorelg.png' alt="Painel Logo" />
-        <main className='signUp-login-painel-box'>
-          <h1>Cadastre-se</h1>
-          <form className='signUp-login-painel-form' onSubmit={handleSubmit(onSubmit)}>
-            <TextField
-              {...register('nome', { required: 'Nome é obrigatório' })}
-              error={!!errors.nome}
-              helperText={errors.nome ? errors.nome.message : ''}
-              label="Nome"
-              fullWidth
-              margin="normal"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position='start'>
-                    <AccountCircleIcon sx={{ color: errors.email ? 'var(--color-error)' : 'inherit' }} />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <TextField
-              {...register('empresa', { required: 'Empresa é obrigatória' })}
-              error={!!errors.empresa}
-              helperText={errors.empresa ? errors.empresa.message : ''}
-              label="Empresa"
-              fullWidth
-              margin="normal"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position='start'>
-                    <ApartmentIcon sx={{ color: errors.email ? 'var(--color-error)' : 'inherit' }} />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <TextField
-              {...register('email', {
-                required: 'E-mail é obrigatório',
-                pattern: {
-                  value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                  message: 'Formato de e-mail inválido',
-                },
-              })}
-              error={!!errors.email}
-              helperText={errors.email ? errors.email.message : ''}
-              label="E-mail"
-              fullWidth
-              margin="normal"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position='start'>
-                    <EmailIcon sx={{ color: errors.email ? 'var(--color-error)' : 'inherit' }} />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <TextField
-              {...register('senha', {
-                required: 'Senha é obrigatória',
-                minLength: {
-                  value: 6,
-                  message: 'A senha deve ter pelo menos 6 caracteres',
-                },
-              })}
-              error={!!errors.senha}
-              helperText={errors.senha ? errors.senha.message : ''}
-              label="Senha"
-              type="password"
-              fullWidth
-              margin="normal"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position='start'>
-                    <KeyIcon sx={{ color: errors.senha ? '#dd5b59' : 'inherit' }} />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <TextField
-              {...register('cpf_cnpj', { required: 'CPF/CNPJ é obrigatório' })}
-              error={!!errors.cpf_cnpj}
-              helperText={errors.cpf_cnpj ? errors.cpf_cnpj.message : ''}
-              label="CPF/CNPJ"
-              fullWidth
-              margin="normal"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position='start'>
-                    <InsertDriveFileIcon sx={{ color: errors.email ? 'var(--color-error)' : 'inherit' }} />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <TextField
-              {...register('telefone', { required: 'Telefone é obrigatório' })}
-              error={!!errors.telefone}
-              helperText={errors.telefone ? errors.telefone.message : ''}
-              label="Telefone"
-              fullWidth
-              margin="normal"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position='start'>
-                    <LocalPhoneIcon sx={{ color: errors.email ? 'var(--color-error)' : 'inherit' }} />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <TextField
-              {...register('celular', { required: 'Celular é obrigatório' })}
-              error={!!errors.celular}
-              helperText={errors.celular ? errors.celular.message : ''}
-              label="Celular"
-              fullWidth
-              margin="normal"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position='start'>
-                    <PhoneIphoneIcon sx={{ color: errors.email ? 'var(--color-error)' : 'inherit' }} />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <TextField
-              {...register('cep', { required: 'CEP é obrigatório' })}
-              error={!!errors.cep}
-              helperText={errors.cep ? errors.cep.message : ''}
-              label="CEP"
-              fullWidth
-              margin="normal"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position='start'>
-                    <MyLocationIcon sx={{ color: errors.email ? 'var(--color-error)' : 'inherit' }} />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <TextField
-              {...register('endereco', { required: 'Endereço é obrigatório' })}
-              error={!!errors.endereco}
-              helperText={errors.endereco ? errors.endereco.message : ''}
-              label="Endereço"
-              fullWidth
-              margin="normal"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position='start'>
-                    <EditRoadIcon sx={{ color: errors.email ? 'var(--color-error)' : 'inherit' }} />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <div className='perfil-sign'>
-              <h2>Perfil</h2>
-              <RadioGroup {...register('perfil', { required: 'Perfil é obrigatório' })}>
-                <FormControlLabel value="Cessionaria" control={<Radio />} label="Cessionária" />
-                <FormControlLabel value="Sacado" control={<Radio />} label="Sacado" />
-                <FormControlLabel value="Operador" control={<Radio />} label="Operador" />
-              </RadioGroup>
-              {errors.perfil && <p style={{ color: 'var(--color-error)' }}>{errors.perfil.message}</p>}
-            </div>
-            <button className='signUp-login-painel-form-send' type="submit">
-              Cadastrar
-            </button>
-          </form>
-        </main>
-      </section>
-      <TermsModal open={modalOpen} handleClose={handleCloseModal} cnpj={cnpj} termsData={termsData} />
-    </div>
+    <>
+      <Menu />
+      {loader && <Loader />}
+      <div className='content-page'>
+        <section className="signUp-profile-painel">
+          <main className='signUp-profile-painel-box'>
+            <h1>Cadastrar usuário</h1>
+            <form className='signUp-profile-painel-form' onSubmit={handleSubmit(onSubmit)}>
+              <TextField
+                {...register('nome', { required: 'Nome é obrigatório' })}
+                error={!!errors.nome}
+                helperText={errors.nome ? errors.nome.message : ''}
+                label="Nome"
+                fullWidth
+                margin="normal"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <AccountCircleIcon sx={{ color: errors.email ? 'var(--color-error)' : 'inherit' }} />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <TextField
+                {...register('empresa', { required: 'Empresa é obrigatória' })}
+                error={!!errors.empresa}
+                helperText={errors.empresa ? errors.empresa.message : ''}
+                label="Empresa"
+                fullWidth
+                margin="normal"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <ApartmentIcon sx={{ color: errors.email ? 'var(--color-error)' : 'inherit' }} />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <TextField
+                {...register('email', {
+                  required: 'E-mail é obrigatório',
+                  pattern: {
+                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                    message: 'Formato de e-mail inválido',
+                  },
+                })}
+                error={!!errors.email}
+                helperText={errors.email ? errors.email.message : ''}
+                label="E-mail"
+                fullWidth
+                margin="normal"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <EmailIcon sx={{ color: errors.email ? 'var(--color-error)' : 'inherit' }} />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <TextField
+                {...register('senha', {
+                  required: 'Senha é obrigatória',
+                  minLength: {
+                    value: 6,
+                    message: 'A senha deve ter pelo menos 6 caracteres',
+                  },
+                })}
+                error={!!errors.senha}
+                helperText={errors.senha ? errors.senha.message : ''}
+                label="Senha"
+                type="password"
+                fullWidth
+                margin="normal"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <KeyIcon sx={{ color: errors.senha ? '#dd5b59' : 'inherit' }} />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <TextField
+                {...register('cpf_cnpj', { required: 'CPF/CNPJ é obrigatório' })}
+                error={!!errors.cpf_cnpj}
+                helperText={errors.cpf_cnpj ? errors.cpf_cnpj.message : ''}
+                label="CPF/CNPJ"
+                fullWidth
+                margin="normal"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <InsertDriveFileIcon sx={{ color: errors.email ? 'var(--color-error)' : 'inherit' }} />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <TextField
+                {...register('telefone', { required: 'Telefone é obrigatório' })}
+                error={!!errors.telefone}
+                helperText={errors.telefone ? errors.telefone.message : ''}
+                label="Telefone"
+                fullWidth
+                margin="normal"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <LocalPhoneIcon sx={{ color: errors.email ? 'var(--color-error)' : 'inherit' }} />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <TextField
+                {...register('celular', { required: 'Celular é obrigatório' })}
+                error={!!errors.celular}
+                helperText={errors.celular ? errors.celular.message : ''}
+                label="Celular"
+                fullWidth
+                margin="normal"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <PhoneIphoneIcon sx={{ color: errors.email ? 'var(--color-error)' : 'inherit' }} />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <TextField
+                {...register('cep', { required: 'CEP é obrigatório' })}
+                error={!!errors.cep}
+                helperText={errors.cep ? errors.cep.message : ''}
+                label="CEP"
+                fullWidth
+                margin="normal"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <MyLocationIcon sx={{ color: errors.email ? 'var(--color-error)' : 'inherit' }} />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <TextField
+                {...register('endereco', { required: 'Endereço é obrigatório' })}
+                error={!!errors.endereco}
+                helperText={errors.endereco ? errors.endereco.message : ''}
+                label="Endereço"
+                fullWidth
+                margin="normal"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <EditRoadIcon sx={{ color: errors.email ? 'var(--color-error)' : 'inherit' }} />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <button className='signUp-login-painel-form-send' type="submit">
+                Cadastrar
+              </button>
+            </form>
+          </main>
+        </section>
+        <TermsModal open={modalOpen} handleClose={handleCloseModal} cnpj={cnpj} termsData={termsData} />
+      </div>
+    </>
   );
 }

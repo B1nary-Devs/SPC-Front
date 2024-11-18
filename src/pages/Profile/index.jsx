@@ -59,14 +59,17 @@ export default function Profile() {
     const onSubmit = async (data) => {
         setLoading(true);
         try {
-            // Mapeie `termo_item` com os valores mais recentes dos checkboxes
             const termoAtual = {
                 termo_aceite: aceitouTermo,
                 termo_item: user.user.termo_atual.termo_item.map((item, index) => ({
                     termo_item_nome: item.termo_item_nome,
-                    termo_item_aceite: data.termo_item[index].termo_item_aceite, // Pega o valor atualizado do checkbox
+                    termo_item_aceite: data.termo_item[index].termo_item_aceite,
                 })),
             };
+
+            if (!data.senha) {
+                delete data.senha;
+            }
 
             // CORPO REQUISIÇÃO
             const requestData = {
