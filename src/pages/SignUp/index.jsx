@@ -1,132 +1,243 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
+import TextField from '@mui/material/TextField';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ApartmentIcon from '@mui/icons-material/Apartment';
+import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
+import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import MyLocationIcon from '@mui/icons-material/MyLocation';
+import EditRoadIcon from '@mui/icons-material/EditRoad';
+import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
+import EmailIcon from '@mui/icons-material/Email';
+import KeyIcon from '@mui/icons-material/Key';
+import InputAdornment from '@mui/material/InputAdornment';
+import Loader from '../../components/Loader'
+
+import TermsModal from '../../components/TermoCondicoes/ModalTermoCondicoes';
+import Menu from '../../components/SideBarMenu';
 import { useForm } from 'react-hook-form';
-import { TextField, MenuItem, Box } from '@mui/material';
-import './CadastroUsuario.css';
-import api from '../../api/api'
-import { toast } from 'react-toastify';
 
-export default function CadastroUsuario() {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+import { useDispatch } from 'react-redux';
+import { createUser } from '../../redux/user/userSlice';
+import { fetchLatestTerm } from '../../redux/termo/termoSlice'
 
-  const onSubmit = (data) => {
-    const response = api.post('/users/createUser', {
-      ...data,
-      "cep": "0000-000",
-      "endereco": "N/A",
-      "telefone": "0000000",
-    })
+export default function SignUp() {
+  const dispatch = useDispatch();
+  const [modalOpen, setModalOpen] = useState(false);
+  const [termsData, setTermsData] = useState(null);
+  const [loader, setLoader] = useState(false)
 
-      .then(() => {
-        toast.success('Cadastrado com Sucesso')
-      })
 
-      .catch((error) => {
-        console.log('====================================');
-        console.log(error);
-        console.log('====================================');
-        toast.error('Falha ao registrar')
-      })
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
 
+  const cnpj = watch('cpf_cnpj');
+
+  const onSubmit = async (data) => {
+    try {
+      setLoader(true)
+      const resultAction = await dispatch(createUser(data));
+
+      if (createUser.fulfilled.match(resultAction)) {
+        const termsAction = await dispatch(fetchLatestTerm());
+
+        if (fetchLatestTerm.fulfilled.match(termsAction)) {
+          setTermsData(termsAction.payload);
+          setModalOpen(true);
+          setLoader(false)
+        }
+
+        else {
+          console.error('Erro ao buscar termos:', termsAction.payload);
+          setLoader(false)
+        }
+
+      }
+
+      else if (createUser.rejected.match(resultAction)) {
+        console.error('Erro ao criar usuário:', resultAction.payload);
+        setLoader(false)
+      }
+
+    } catch (error) {
+      console.error('Erro ao despachar a ação de cadastro:', error);
+      setLoader(false)
+    }
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
   };
 
   return (
-    <Box className="form-container">
-      <h1>Usuários</h1>
-      <h4>Cadastrar novo usuário</h4>
-
-      <form onSubmit={handleSubmit(onSubmit)} className="form-content">
-        <div className="form-group">
-          <TextField
-            label="Nome"
-            fullWidth
-            {...register('nome', { required: 'O campo nome é obrigatório' })}
-            error={!!errors.nome}
-            helperText={errors.nome ? errors.nome.message : ''}
-            className="form-field"
-          />
-
-          <TextField
-            label="Perfil"
-            select
-            fullWidth
-            {...register('perfil', { required: 'O campo perfil é obrigatório' })}
-            error={!!errors.perfil}
-            helperText={errors.perfil ? errors.perfil.message : ''}
-            className="form-field"
-          >
-            <MenuItem value="Sacado">Sacado</MenuItem>
-            <MenuItem value="Cessionária">Cessionária</MenuItem>
-          </TextField>
-        </div>
-
-        <div className="form-group">
-          <TextField
-            label="Celular"
-            fullWidth
-            {...register('celular', { required: 'O campo celular é obrigatório' })}
-            error={!!errors.celular}
-            helperText={errors.celular ? errors.celular.message : ''}
-            className="form-field"
-          />
-
-          <TextField
-            label="Email"
-            fullWidth
-            type="email"
-            {...register('email', {
-              required: 'O campo email é obrigatório',
-              pattern: { value: /^\S+@\S+$/i, message: 'Email inválido' }
-            })}
-            error={!!errors.email}
-            helperText={errors.email ? errors.email.message : ''}
-            className="form-field"
-          />
-        </div>
-
-        <div className="form-group">
-          <TextField
-            label="Senha"
-            fullWidth
-            type="password"
-            {...register('senha', { required: 'O campo senha é obrigatório', minLength: { value: 6, message: 'A senha deve ter no mínimo 6 caracteres' } })}
-            error={!!errors.senha}
-            helperText={errors.senha ? errors.senha.message : ''}
-            className="form-field"
-          />
-
-          <TextField
-            label="CPF ou CNPJ"
-            fullWidth
-            {...register('cpf_cnpj', {
-              required: 'O campo CPF ou CNPJ é obrigatório',
-              pattern: {
-                value: /^\d{11}$|^\d{14}$/,
-                message: 'CPF ou CNPJ inválido. Insira 11 dígitos para CPF ou 14 dígitos para CNPJ.'
-              }
-            })}
-            error={!!errors.cpf_cnpj}
-            helperText={errors.cpf_cnpj ? errors.cpf_cnpj.message : ''}
-            className="form-field"
-          />
-        </div>
-
-        <div className="button-group">
-          <button
-            onClick={() => console.log('Voltar')}
-            className="button-cadastroUsuario"
-          >
-            Voltar
-          </button>
-
-          <button
-            type="submit"
-            fullWidth
-            className="button-cadastroUsuario"
-          >
-            Salvar
-          </button>
-        </div>
-      </form>
-    </Box>
+    <>
+      <Menu />
+      {loader && <Loader />}
+      <div className='content-page'>
+        <section className="signUp-profile-painel">
+          <main className='signUp-profile-painel-box'>
+            <h1>Cadastrar usuário</h1>
+            <form className='signUp-profile-painel-form' onSubmit={handleSubmit(onSubmit)}>
+              <TextField
+                {...register('nome', { required: 'Nome é obrigatório' })}
+                error={!!errors.nome}
+                helperText={errors.nome ? errors.nome.message : ''}
+                label="Nome"
+                fullWidth
+                margin="normal"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <AccountCircleIcon sx={{ color: errors.email ? 'var(--color-error)' : 'inherit' }} />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <TextField
+                {...register('empresa', { required: 'Empresa é obrigatória' })}
+                error={!!errors.empresa}
+                helperText={errors.empresa ? errors.empresa.message : ''}
+                label="Empresa"
+                fullWidth
+                margin="normal"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <ApartmentIcon sx={{ color: errors.email ? 'var(--color-error)' : 'inherit' }} />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <TextField
+                {...register('email', {
+                  required: 'E-mail é obrigatório',
+                  pattern: {
+                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                    message: 'Formato de e-mail inválido',
+                  },
+                })}
+                error={!!errors.email}
+                helperText={errors.email ? errors.email.message : ''}
+                label="E-mail"
+                fullWidth
+                margin="normal"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <EmailIcon sx={{ color: errors.email ? 'var(--color-error)' : 'inherit' }} />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <TextField
+                {...register('senha', {
+                  required: 'Senha é obrigatória',
+                  minLength: {
+                    value: 6,
+                    message: 'A senha deve ter pelo menos 6 caracteres',
+                  },
+                })}
+                error={!!errors.senha}
+                helperText={errors.senha ? errors.senha.message : ''}
+                label="Senha"
+                type="password"
+                fullWidth
+                margin="normal"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <KeyIcon sx={{ color: errors.senha ? '#dd5b59' : 'inherit' }} />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <TextField
+                {...register('cpf_cnpj', { required: 'CPF/CNPJ é obrigatório' })}
+                error={!!errors.cpf_cnpj}
+                helperText={errors.cpf_cnpj ? errors.cpf_cnpj.message : ''}
+                label="CPF/CNPJ"
+                fullWidth
+                margin="normal"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <InsertDriveFileIcon sx={{ color: errors.email ? 'var(--color-error)' : 'inherit' }} />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <TextField
+                {...register('telefone', { required: 'Telefone é obrigatório' })}
+                error={!!errors.telefone}
+                helperText={errors.telefone ? errors.telefone.message : ''}
+                label="Telefone"
+                fullWidth
+                margin="normal"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <LocalPhoneIcon sx={{ color: errors.email ? 'var(--color-error)' : 'inherit' }} />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <TextField
+                {...register('celular', { required: 'Celular é obrigatório' })}
+                error={!!errors.celular}
+                helperText={errors.celular ? errors.celular.message : ''}
+                label="Celular"
+                fullWidth
+                margin="normal"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <PhoneIphoneIcon sx={{ color: errors.email ? 'var(--color-error)' : 'inherit' }} />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <TextField
+                {...register('cep', { required: 'CEP é obrigatório' })}
+                error={!!errors.cep}
+                helperText={errors.cep ? errors.cep.message : ''}
+                label="CEP"
+                fullWidth
+                margin="normal"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <MyLocationIcon sx={{ color: errors.email ? 'var(--color-error)' : 'inherit' }} />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <TextField
+                {...register('endereco', { required: 'Endereço é obrigatório' })}
+                error={!!errors.endereco}
+                helperText={errors.endereco ? errors.endereco.message : ''}
+                label="Endereço"
+                fullWidth
+                margin="normal"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <EditRoadIcon sx={{ color: errors.email ? 'var(--color-error)' : 'inherit' }} />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <button className='signUp-login-painel-form-send' type="submit">
+                Cadastrar
+              </button>
+            </form>
+          </main>
+        </section>
+        <TermsModal open={modalOpen} handleClose={handleCloseModal} cnpj={cnpj} termsData={termsData} />
+      </div>
+    </>
   );
 }

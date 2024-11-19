@@ -28,7 +28,7 @@ export default function SignIn() {
             const resultAction = await dispatch(loginUser(data));
 
             if (loginUser.fulfilled.match(resultAction)) {
-                navigate('/dashboard');
+                navigate('/home');
             } else if (loginUser.rejected.match(resultAction)) {
                 console.error('Erro ao fazer login:', resultAction.payload);
             }
@@ -40,7 +40,7 @@ export default function SignIn() {
     return (
         <div className='signUp'>
 
-            <img className='signUp-logo-img' src='./logoB1.png' alt="Logo" />
+            <img className='signUp-logo-img' src='./logob1.png' alt="Logo" />
 
             <section className="signUp-login-painel">
                 <img className='signUp-login-painel-img' src='./scorelg.png' alt="Painel Logo" />
@@ -90,7 +90,7 @@ export default function SignIn() {
                             error={!!errors.senha}
                             helperText={errors.senha ? errors.senha.message : ''}
                             label="Senha"
-                            type="senha"
+                            type="password"
                             fullWidth
                             margin="normal"
                             slotProps={{
