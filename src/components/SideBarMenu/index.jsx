@@ -175,7 +175,7 @@ export default function SideBarMenu() {
                     <Link className='sidebar-item' to={'/mapa'}>
                         <ListItemButton>
                             <ListItemIcon>
-                                <ReportGmailerrorredIcon sx={{ color: 'white' }} />
+                                <LocationOnIcon sx={{ color: 'white' }} />
                             </ListItemIcon>
                             <ListItemText primary="Praça de Pagamento" />
                         </ListItemButton>
@@ -186,7 +186,7 @@ export default function SideBarMenu() {
                     <Link className='sidebar-item' to={'/dashboard'}>
                         <ListItemButton>
                             <ListItemIcon>
-                                <LocationOnIcon sx={{ color: 'white' }} />
+                                <ReportGmailerrorredIcon sx={{ color: 'white' }} />
                             </ListItemIcon>
                             <ListItemText primary="Anomalias" />
                         </ListItemButton>

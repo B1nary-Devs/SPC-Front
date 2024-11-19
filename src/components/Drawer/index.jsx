@@ -1,13 +1,21 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { LinearProgress } from '@mui/material';
-import './drawer.css'
+import { useSelector } from 'react-redux';
+import './drawer.css';
 
 export default function DataDrawer() {
     const [isOpen, setIsOpen] = React.useState(false);
+
+    const estadosDuplicatas = useSelector((state) => state.duplicatas.estadosDuplicatas);
+
+    const totalDuplicatas = estadosDuplicatas.reduce((acc, curr) => acc + curr.duplicatas, 0);
+
+    const top5Estados = [...estadosDuplicatas]
+        .sort((a, b) => b.duplicatas - a.duplicatas)
+        .slice(0, 5);
 
     const toggleDrawer = (open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -25,8 +33,12 @@ export default function DataDrawer() {
                     top: '50%',
                     left: 60,
                     zIndex: 22,
-                    backgroundColor: '#FFFF',
+                    backgroundColor: '#04235e',
+                    color: '#FFFF',
                     transform: 'translateY(-50%)',
+                    '&:hover': {
+                        backgroundColor: '#03417b',
+                    },
                 }}
             >
                 <ArrowForwardIcon />
@@ -38,21 +50,31 @@ export default function DataDrawer() {
             >
                 <div className="corpo-drawer">
                     <h3>Total</h3>
-                    <p>2500</p>
+                    <p>{totalDuplicatas}</p>
                     <h4>Duplicatas</h4>
-                    <h5>Estados que possuem mais acúmulo</h5>
-                    <div className="duplicatas-estatistica">
-                        <span>BA</span>
-                        <LinearProgress variant="determinate" value={67}
-                            sx={{ height: 10, marginTop: '5px' , backgroundColor: '#f1f1f1', '& .MuiLinearProgress-bar': { backgroundColor: '#ff0000' }, borderRadius: '8px' }}
-                        />
-                    </div>
-                    <div className="duplicatas-estatistica">
-                        <span>BA</span>
-                        <LinearProgress variant="determinate" value={67}
-                            sx={{ height: 10, marginTop: '5px' , backgroundColor: '#f1f1f1', '& .MuiLinearProgress-bar': { backgroundColor: '#ff0000' }, borderRadius: '8px' }}
-                        />
-                    </div>
+                    <h5>Top 5 Estados com maior acúmulo de duplicatas</h5>
+                    {top5Estados.map((duplicatas, index) => {
+                        const percentual = (duplicatas.duplicatas / totalDuplicatas) * 100;
+                        return (
+                            <div key={index} className="duplicatas-estatistica">
+                                <div className="duplicatas-valor">
+                                    <span>{duplicatas.estado}</span>
+                                    <span>{duplicatas.duplicatas}</span>
+                                </div>
+                                <LinearProgress
+                                    variant="determinate"
+                                    value={percentual}
+                                    sx={{
+                                        height: 10,
+                                        marginTop: '5px',
+                                        backgroundColor: '#f1f1f1',
+                                        '& .MuiLinearProgress-bar': { backgroundColor: '#165de0' },
+                                        borderRadius: '8px',
+                                    }}
+                                />
+                            </div>
+                        );
+                    })}
                 </div>
             </Drawer>
         </div>
