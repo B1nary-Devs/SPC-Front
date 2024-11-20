@@ -10,7 +10,8 @@ import Sacados from '../pages/Sacados'
 import Users from '../pages/Users'
 import Profile from '../pages/Profile'
 import ShowTermo from '../pages/ShowModal'
-import Mapa from '../pages/Mapa'
+import Mapa from '../pages/Map'
+import Conliation from '../pages/Conciliation'
 
 function RoutesApp(){
     return(
@@ -27,6 +28,7 @@ function RoutesApp(){
             <Route path='/sacados' element={<Sacados/>}/>
             <Route path='/users' element={<Users/>}/>
             <Route path='/mapa' element={<Mapa/>}/>
+            <Route path='/conciliation' element={<Conliation/>}/>
         </Routes>
     )
 }

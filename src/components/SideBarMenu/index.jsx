@@ -194,7 +194,7 @@ export default function SideBarMenu() {
                 </li>
 
                 <li>
-                    <Link className='sidebar-item' to={'/dashboard'}>
+                    <Link className='sidebar-item' to={'/conciliation'}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <FlipToFrontIcon sx={{ color: 'white' }} />
