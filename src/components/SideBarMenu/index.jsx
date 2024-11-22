@@ -183,7 +183,7 @@ export default function SideBarMenu() {
                 </li>
 
                 <li>
-                    <Link className='sidebar-item' to={'/dashboard'}>
+                    <Link className='sidebar-item' to={'/anomalies'}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <ReportGmailerrorredIcon sx={{ color: 'white' }} />

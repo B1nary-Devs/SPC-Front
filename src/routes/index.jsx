@@ -12,6 +12,7 @@ import Profile from '../pages/Profile'
 import ShowTermo from '../pages/ShowModal'
 import Mapa from '../pages/Map'
 import Conliation from '../pages/Conciliation'
+import Anomalies from '../pages/Anomalies'
 
 function RoutesApp(){
     return(
@@ -29,6 +30,7 @@ function RoutesApp(){
             <Route path='/users' element={<Users/>}/>
             <Route path='/mapa' element={<Mapa/>}/>
             <Route path='/conciliation' element={<Conliation/>}/>
+            <Route path='/anomalies' element={<Anomalies/>}/>
         </Routes>
     )
 }

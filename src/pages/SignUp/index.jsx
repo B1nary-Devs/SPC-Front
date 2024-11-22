@@ -40,7 +40,13 @@ export default function SignUp() {
   const onSubmit = async (data) => {
     try {
       setLoader(true)
-      const resultAction = await dispatch(createUser(data));
+
+      const userValue = {
+        ...data, 
+        perfil: 'cessionaria',
+      };
+
+      const resultAction = await dispatch(createUser(userValue));
 
       if (createUser.fulfilled.match(resultAction)) {
         const termsAction = await dispatch(fetchLatestTerm());
