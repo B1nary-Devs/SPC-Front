@@ -40,7 +40,7 @@ export default function SignIn() {
     return (
         <div className='signUp'>
 
-            <img className='signUp-logo-img' src='./logob1.png' alt="Logo" />
+            
 
             <section className="signUp-login-painel">
                 <img className='signUp-login-painel-img' src='./scorelg.png' alt="Painel Logo" />
