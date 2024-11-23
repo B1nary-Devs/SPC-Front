@@ -4,7 +4,7 @@ import api from '../../api/api';
 import { useState, useEffect } from 'react';
 
 export default function Anomalies() {
-    const [cessionarias, setCessionarias] = useState(null); // Inicializado como null
+    const [cessionarias, setCessionarias] = useState(null); 
 
     useEffect(() => {
         loadCessionarias();
@@ -12,15 +12,12 @@ export default function Anomalies() {
 
     async function loadCessionarias() {
         try {
-            const response = await api.get('/assignee/56724594553/fraudulent_sacados');
-            setCessionarias(response.data); // Armazenando a resposta corretamente
+            const response = await api.get('/assignee/fraudulent_assignees');
+            setCessionarias(response.data);
         } catch (e) {
             console.error("Erro ao carregar os dados", e);
         }
     }
-
-    console.log(cessionarias);
-    
 
     return (
         <>
@@ -30,7 +27,13 @@ export default function Anomalies() {
                     <h1>Detecção de Anomalias</h1>
                 </div>
                 <main className="conciliation-body">
-                    
+                    {cessionarias && cessionarias.length > 0 ? (
+                        cessionarias.map((cessionaria, index) => (
+                            <AccordionAnomalies key={index} cnpj={cessionaria.cessionaria_cnpj}/>
+                        ))
+                    ) : (
+                        <span>Carregando...</span> // Exibição caso não haja dados ainda
+                    )}
                 </main>
             </div>
         </>
