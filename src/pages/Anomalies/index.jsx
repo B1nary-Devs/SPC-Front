@@ -21,7 +21,7 @@ export default function Anomalies() {
 
     return (
         <>
-            <Menu />
+            <Menu/>
             <div className="content-page">
                 <div className="conciliation-header">
                     <h1>Detecção de Anomalias</h1>

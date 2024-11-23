@@ -159,50 +159,49 @@ export default function SideBarMenu() {
                         </Link>
                     </li>
                 ) : (
-                    <li>
-                        <Link to={'/users'}>
-                            <ListItemButton>
-                                <ListItemIcon>
-                                    <PersonIcon sx={{ color: 'white' }} />
-                                </ListItemIcon>
-                                <ListItemText primary="Usuários" />
-                            </ListItemButton>
-                        </Link>
-                    </li>
+                    <>
+                        <li>
+                            <Link to={'/users'}>
+                                <ListItemButton>
+                                    <ListItemIcon>
+                                        <PersonIcon sx={{ color: 'white' }} />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Usuários" />
+                                </ListItemButton>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link className='sidebar-item' to={'/mapa'}>
+                                <ListItemButton>
+                                    <ListItemIcon>
+                                        <LocationOnIcon sx={{ color: 'white' }} />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Praça de Pagamento" />
+                                </ListItemButton>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link className='sidebar-item' to={'/anomalies'}>
+                                <ListItemButton>
+                                    <ListItemIcon>
+                                        <ReportGmailerrorredIcon sx={{ color: 'white' }} />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Anomalias" />
+                                </ListItemButton>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link className='sidebar-item' to={'/conciliation'}>
+                                <ListItemButton>
+                                    <ListItemIcon>
+                                        <FlipToFrontIcon sx={{ color: 'white' }} />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Conciliação Mensal" />
+                                </ListItemButton>
+                            </Link>
+                        </li>
+                    </>
                 )}
-
-                <li>
-                    <Link className='sidebar-item' to={'/mapa'}>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                <LocationOnIcon sx={{ color: 'white' }} />
-                            </ListItemIcon>
-                            <ListItemText primary="Praça de Pagamento" />
-                        </ListItemButton>
-                    </Link>
-                </li>
-
-                <li>
-                    <Link className='sidebar-item' to={'/anomalies'}>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                <ReportGmailerrorredIcon sx={{ color: 'white' }} />
-                            </ListItemIcon>
-                            <ListItemText primary="Anomalias" />
-                        </ListItemButton>
-                    </Link>
-                </li>
-
-                <li>
-                    <Link className='sidebar-item' to={'/conciliation'}>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                <FlipToFrontIcon sx={{ color: 'white' }} />
-                            </ListItemIcon>
-                            <ListItemText primary="Conciliação Mensal" />
-                        </ListItemButton>
-                    </Link>
-                </li>
 
                 <li>
                     <Link className='sidebar-item' onClick={handleLogout} to={'/'}>

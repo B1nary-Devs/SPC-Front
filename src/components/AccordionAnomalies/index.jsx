@@ -32,7 +32,6 @@ export default function AccordionAnomalies({ cnpj }) {
   }
 
   function calculateAlerts(sacados) {
-    // Contabiliza a ocorrência de cada sacado pelo nome
     const counts = {};
     sacados.forEach((sacado) => {
       const name = sacado.cessionaria_sacado_nome;
@@ -50,7 +49,7 @@ export default function AccordionAnomalies({ cnpj }) {
             aria-controls="panel1-content"
             id="panel1-header"
           >
-            {cessionaria.cessionaria_nome} ({cessionaria.cessionaria_cnpj})
+            {cessionaria.cessionaria_nome} 
           </AccordionSummary>
           <AccordionDetails>
             <div className="AccordionDetails">
@@ -59,6 +58,8 @@ export default function AccordionAnomalies({ cnpj }) {
                   <tr>
                     <th>Nome do Sacado</th>
                     <th>Alertas</th>
+                    <th>CNPJ</th>
+                    <th>Valor</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -66,7 +67,8 @@ export default function AccordionAnomalies({ cnpj }) {
                     <tr key={idx}>
                       <td>{sacado.cessionaria_sacado_nome}</td>
                       <td>{sacadoAlerts[sacado.cessionaria_sacado_nome] || 0}</td>
-                      <td>ola</td>
+                      <td>{sacado.cessionaria_sacado_cnpj}</td>
+                      <td> R$ {sacado.cessionaria_sacado_duplicadas_valor}</td>
                     </tr>
                   ))}
                 </tbody>
