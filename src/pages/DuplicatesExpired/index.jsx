@@ -39,7 +39,7 @@ export default function DuplicatesExpired() {
 
             if (response.data && Array.isArray(response.data.cessionaria_sacado)) {
                 const status = response.data.cessionaria_sacado.filter(
-                    (item) => item.cessionaria_sacado_duplicata_status === 'Vencido'
+                    (item) => item.cessionaria_sacado_duplicata_status === 'vencida'
                 );
 
                 setDuplicates(status);
@@ -63,9 +63,9 @@ export default function DuplicatesExpired() {
 
         if (selectedMonth !== '00') {
             filteredRows = filteredRows.filter((sacado) => {
-                if (sacado.cessionaria_sacado_data_pagamento) {
-                    const pagamentoDate = new Date(sacado.cessionaria_sacado_data_pagamento);
-                    const month = pagamentoDate.getUTCMonth() + 1;
+                if (sacado.cessionaria_sacado_duplicadas_data_final) {
+                    const vencimentoDate = new Date(sacado.cessionaria_sacado_duplicadas_data_final);
+                    const month = vencimentoDate.getUTCMonth() + 1;
                     return month === parseInt(selectedMonth);
                 }
                 return false;
@@ -74,12 +74,13 @@ export default function DuplicatesExpired() {
 
         if (searchTerm) {
             filteredRows = filteredRows.filter((sacado) =>
-                sacado.cessionaria_sacado_empresa.toLowerCase().includes(searchTerm.toLowerCase())
+                sacado.cessionaria_sacado_nome.toLowerCase().includes(searchTerm.toLowerCase())
             );
         }
 
         return filteredRows;
     };
+
 
     const totalPages = Math.ceil(getFilteredRows().length / rowsPerPage);
 
@@ -164,12 +165,12 @@ export default function DuplicatesExpired() {
                             <TableBody>
                                 {currentRows.map((sacado) => (
                                     <TableRow key={sacado.cessionaria_sacado_id}>
-                                        <TableCell>{sacado.cessionaria_sacado_empresa}</TableCell>
-                                        <TableCell align="center">{sacado.cessionaria_sacado_contato}</TableCell>
-                                        <TableCell align="center">{sacado.cessionaria_sacado_email}</TableCell>
-                                        <TableCell align="center">{formatDate(sacado.cessionaria_sacado_data_pagamento)}</TableCell>
+                                        <TableCell>{sacado.cessionaria_sacado_nome}</TableCell>
+                                        <TableCell align="center">{sacado.cessionaria_sacado_contato || 'Não informado'}</TableCell>
+                                        <TableCell align="center">{sacado.cessionaria_sacado_email || 'Não informado'}</TableCell>
+                                        <TableCell align="center">{formatDate(sacado.cessionaria_sacado_duplicadas_data_final)}</TableCell>
                                         <TableCell align="center">
-                                                <Button color='error' variant="contained">{sacado.cessionaria_sacado_duplicata_status}</Button>    
+                                            <Button color='error' variant="contained">{sacado.cessionaria_sacado_duplicata_status}</Button>
                                         </TableCell>
                                         <TableCell align="center">
                                             <ActionButton sacado={sacado} loadDuplicates={loadDuplicates} cessionaria={cessionaria} />

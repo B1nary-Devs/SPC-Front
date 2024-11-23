@@ -1,10 +1,6 @@
-import './index.css';
 import * as React from 'react';
-import { useState } from 'react';
-
 import IconButton from '@mui/material/IconButton';
-import Button from '@mui/material/Button';
-
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
@@ -14,8 +10,6 @@ import GroupIcon from '@mui/icons-material/Group';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import HomeIcon from '@mui/icons-material/Home';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { Link, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -23,7 +17,15 @@ import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import FlipToFrontIcon from '@mui/icons-material/FlipToFront';
+
+import './index.css';
 import { logoutUser } from '../../redux/user/userSlice';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { useState } from 'react';
 
 export default function SideBarMenu() {
 
@@ -73,6 +75,16 @@ export default function SideBarMenu() {
                                 <HomeIcon sx={{ color: 'white' }} />
                             </ListItemIcon>
                             <ListItemText primary="Home" />
+                        </ListItemButton>
+                    </Link>
+                </li>
+                <li>
+                    <Link className='sidebar-item' to={'/profile'}>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <AccountCircleIcon sx={{ color: 'white' }} />
+                            </ListItemIcon>
+                            <ListItemText primary="Perfil" />
                         </ListItemButton>
                     </Link>
                 </li>
@@ -147,16 +159,48 @@ export default function SideBarMenu() {
                         </Link>
                     </li>
                 ) : (
-                    <li>
-                        <Link to={'/users'}>
-                            <ListItemButton>
-                                <ListItemIcon>
-                                    <PersonIcon sx={{ color: 'white' }} />
-                                </ListItemIcon>
-                                <ListItemText primary="Usuários" />
-                            </ListItemButton>
-                        </Link>
-                    </li>
+                    <>
+                        <li>
+                            <Link to={'/users'}>
+                                <ListItemButton>
+                                    <ListItemIcon>
+                                        <PersonIcon sx={{ color: 'white' }} />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Usuários" />
+                                </ListItemButton>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link className='sidebar-item' to={'/mapa'}>
+                                <ListItemButton>
+                                    <ListItemIcon>
+                                        <LocationOnIcon sx={{ color: 'white' }} />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Praça de Pagamento" />
+                                </ListItemButton>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link className='sidebar-item' to={'/anomalies'}>
+                                <ListItemButton>
+                                    <ListItemIcon>
+                                        <ReportGmailerrorredIcon sx={{ color: 'white' }} />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Anomalias" />
+                                </ListItemButton>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link className='sidebar-item' to={'/conciliation'}>
+                                <ListItemButton>
+                                    <ListItemIcon>
+                                        <FlipToFrontIcon sx={{ color: 'white' }} />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Conciliação Mensal" />
+                                </ListItemButton>
+                            </Link>
+                        </li>
+                    </>
                 )}
 
                 <li>
@@ -169,6 +213,7 @@ export default function SideBarMenu() {
                         </ListItemButton>
                     </Link>
                 </li>
+
             </ul>
         </div>
     );

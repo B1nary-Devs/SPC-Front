@@ -1,0 +1,38 @@
+.conciliation-header{
+    padding: 20px;
+}
+
+.conciliation-header h1{
+    margin: 20px 0;
+}
+
+.conciliation-body{
+    padding: 70px;
+}
+
+.drag-drop-zone {
+    width: 100%;
+    max-width: 500px;
+    height: 150px;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 0 auto 20px;
+    color: #666;
+    transition: border-color 0.3s, background-color 0.3s;
+    cursor: pointer;
+}
+
+.drag-drop-zone.active {
+    border-color: #2196f3;
+    background-color: #e3f2fd;
+    color: #2196f3;
+}
+
+.drag-drop-zone p {
+    font-size: 1rem;
+    margin: 0;
+}
