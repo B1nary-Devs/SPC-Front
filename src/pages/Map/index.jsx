@@ -19,14 +19,14 @@ export default function Mapa() {
             <Menu />
             <div className="content-page">
 
-                <div className="mapa">
+                <main className="mapa">
                     <DataDrawer />
                     <iframe
                         src="/mapa_interativo.html" // Caminho relativo ao arquivo na pasta public
                         width="100%"
                         height="100%"
                     ></iframe>
-                </div>
+                </main>
             </div>
         </>
     );
