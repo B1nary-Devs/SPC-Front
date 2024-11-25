@@ -36,7 +36,7 @@ export default function AccordionConcliation({ data }) {
             <AccordionDetails>
               <div className="AccordionDetails">
                 <span>Previsto:</span>
-                <p>{previsto} Unidades</p>
+                <p>{previsto === 0 ? '-' : `${previsto} Unidades`}</p>
                 <span>Recebido:</span>
                 <p>{recebido} Unidades</p>
               </div>

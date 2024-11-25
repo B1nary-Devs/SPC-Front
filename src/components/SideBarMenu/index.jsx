@@ -20,6 +20,7 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import FlipToFrontIcon from '@mui/icons-material/FlipToFront';
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
 
 import './index.css';
 import { logoutUser } from '../../redux/user/userSlice';
@@ -167,6 +168,14 @@ export default function SideBarMenu() {
                                         <PersonIcon sx={{ color: 'white' }} />
                                     </ListItemIcon>
                                     <ListItemText primary="Usuários" />
+                                </ListItemButton>
+                            </Link>
+                            <Link to={'/signup'}>
+                                <ListItemButton>
+                                    <ListItemIcon>
+                                        <GroupAddIcon sx={{ color: 'white' }} />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Cadastrar Usuário" />
                                 </ListItemButton>
                             </Link>
                         </li>
